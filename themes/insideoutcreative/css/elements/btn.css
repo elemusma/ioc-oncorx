@@ -26,3 +26,15 @@
     color: white;
     text-decoration: none;
 }
+
+.btn-main.secondary {
+    background: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+    color: white;
+}
+
+.btn-main.secondary:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+}

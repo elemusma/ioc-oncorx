@@ -15,7 +15,8 @@ a {
   color: var(--accent-secondary);
 }
 
-.text-accent-tertiary {
+.text-accent-tertiary,
+a.text-accent-tertiary:hover {
   color: var(--accent-tertiary);
 }
 

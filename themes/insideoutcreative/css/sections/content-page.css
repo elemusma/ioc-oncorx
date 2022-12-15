@@ -2,8 +2,23 @@
     font-size: 125%;
 }
 
-@media only screen and (min-width:992px) {
+/* @media only screen and (min-width:992px) {
     .content-image p {
-        width: 50%;
+        width: 75%;
     }
+} */
+
+/* start of solutions */
+.col-solutions-icon {
+    width: 150px;
+    height: 150px;
+    /* background: red; */
+    background: rgb(255, 255, 255);
+    background: linear-gradient(45deg, rgba(255, 255, 255, 1) 0%, rgba(220, 243, 242, 1) 100%);
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, .5);
+    object-fit: contain;
 }
+
+/* end of solutions */

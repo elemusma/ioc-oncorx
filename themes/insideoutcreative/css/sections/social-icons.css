@@ -1,24 +1,31 @@
 .si svg {
-    height:15px;
+    height: 25px;
     width: auto;
+    fill: #464646;
 }
+
 .svg-icon {
-    border: 1px solid black;
-    height:40px;
-    width:40px;
+    border: 1px solid white;
+    background: white;
+    height: 40px;
+    width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 5px;
     margin-right: 10px;
 }
-.svg-icon,.svg-icon path {
-    transition:all .25s ease-in-out;
+
+.svg-icon,
+.svg-icon path {
+    transition: all .25s ease-in-out;
 }
+
 a:hover .svg-icon {
-    background:var(--accent-primary);
-    border-color:var(--accent-primary);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
 }
+
 a:hover .svg-icon path {
     fill: white;
 }

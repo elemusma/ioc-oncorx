@@ -21,17 +21,17 @@ echo '</div>';
 echo '</div>';
 echo '</section>';
 
-echo '<section class="pt-5 bg-accent">';
+echo '<section class="pt-5" style="background:#464646;">';
 echo '<div class="container">';
 echo '<div class="row justify-content-center">';
-echo '<div class="col-12">';
+// echo '<div class="col-12">';
 
-wp_nav_menu(array(
-'menu' => 'footer',
-'menu_class'=>'menu d-flex flex-wrap list-unstyled justify-content-center text-white text-uppercase'
-));
+// wp_nav_menu(array(
+// 'menu' => 'footer',
+// 'menu_class'=>'menu d-flex flex-wrap list-unstyled justify-content-center text-white text-uppercase'
+// ));
 
-echo '</div>';
+// echo '</div>';
 echo '<div class="col-12 text-center text-white">';
 
 echo get_template_part('partials/si');
