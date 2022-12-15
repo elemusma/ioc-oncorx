@@ -12,7 +12,9 @@
 }
 
 .btn-main {
-    background: var(--accent-primary);
+    background: transparent;
+    border: 2px solid var(--accent-primary);
+    color: #353535;
     padding: 10px 25px;
     transition: all .25s ease-in-out;
     display: inline-block;
@@ -20,6 +22,7 @@
 }
 
 .btn-main:hover {
-    background: var(--accent-secondary);
+    background: var(--accent-primary);
+    color: white;
     text-decoration: none;
 }

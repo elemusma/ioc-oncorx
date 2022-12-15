@@ -1,6 +1,6 @@
 <?php
 
-function done_right_signs_stylesheets() {
+function oncorx_stylesheets() {
 wp_enqueue_style('style', get_stylesheet_uri() );
 
 wp_enqueue_style('bootstrap', get_theme_file_uri('/css/bootstrap.min.css'));
@@ -18,9 +18,9 @@ if(is_page_template('templates/about.php')){
 	wp_enqueue_style('about-custom', get_theme_file_uri('/css/sections/about.css'));
 	wp_enqueue_style('intro', get_theme_file_uri('/css/sections/intro.css'));
 }
-if( is_page_template('templates/content-page.php' ) ){
+// if( is_page_template('templates/content-page.php' ) ){
 	wp_enqueue_style('content-page', get_theme_file_uri('/css/sections/content-page.css'));
-}
+// }
 if(is_single() || is_page_template('templates/blog.php') || is_archive() || is_category() || is_tag() || is_404() ) {
 wp_enqueue_style('blog', get_theme_file_uri('/css/sections/blog.css'));
 }
@@ -34,12 +34,13 @@ wp_enqueue_style('btn', get_theme_file_uri('/css/elements/btn.css'));
 wp_enqueue_style('fonts', get_theme_file_uri('/css/elements/fonts.css'));
 wp_enqueue_style('proxima-nova', get_theme_file_uri('/proxima-nova/proxima-nova.css'));
 wp_enqueue_style('blair-itc', get_theme_file_uri('/blair-itc/blair-itc.css'));
-wp_enqueue_style('aspira', get_theme_file_uri('/aspira-font/aspira-font.css'));
+wp_enqueue_style('adobe-garamond', '//use.typekit.net/yyo1vai.css');
+// wp_enqueue_style('aspira', get_theme_file_uri('/aspira-font/aspira-font.css'));
 
 }
-add_action('wp_enqueue_scripts', 'done_right_signs_stylesheets');
+add_action('wp_enqueue_scripts', 'oncorx_stylesheets');
 // for footer
-function done_right_signs_stylesheets_footer() {
+function oncorx_stylesheets_footer() {
 	// wp_enqueue_style('style-footer', get_theme_file_uri('/css/style-footer.css'));
 	// owl carousel
 	wp_enqueue_style('owl.carousel.min', get_theme_file_uri('/owl-carousel/owl.carousel.min.css'));
@@ -75,7 +76,7 @@ function done_right_signs_stylesheets_footer() {
 		}
 	}
 	
-add_action('get_footer', 'done_right_signs_stylesheets_footer');
+add_action('get_footer', 'oncorx_stylesheets_footer');
 
 // loads enqueued javascript files deferred
 function mind_defer_scripts( $tag, $handle, $src ) {
@@ -99,7 +100,7 @@ function mind_defer_scripts( $tag, $handle, $src ) {
   } 
   add_filter( 'script_loader_tag', 'mind_defer_scripts', 10, 3 );
 
-function done_right_signs_menus() {
+function oncorx_menus() {
  register_nav_menus( array(
    'primary' => __( 'Primary' )));
 register_nav_menus( array(
@@ -109,7 +110,7 @@ register_nav_menus( array(
  add_theme_support('post-thumbnails');
 }
 
-add_action('after_setup_theme', 'done_right_signs_menus');
+add_action('after_setup_theme', 'oncorx_menus');
 
 if( function_exists('acf_add_options_page') ) {
 
@@ -180,9 +181,9 @@ function btn_shortcode( $atts, $content = null ) {
 	
 	// return '<a class="btn-accent-primary" href="' . esc_attr($a['href']) . '" target="' . esc_attr($a['target']) . '">' . $content . '</a>';
 	
-	return '<a class="' . esc_attr($a['class']) . '" href="' . esc_attr($a['href']) . '" style="' . esc_attr($a['style']) . '" target="' . esc_attr($a['target']) . '">' . $content . '</a>';
+	return '<a class="btn-main ' . esc_attr($a['class']) . '" href="' . esc_attr($a['href']) . '" style="' . esc_attr($a['style']) . '" target="' . esc_attr($a['target']) . '">' . $content . '</a>';
 	
-	// [button href="#" class="btn btn-lg btn-default" style="font-weight:bold; margin-top:50px; background-color: #999"]Learn More[/button]
+	// [button href="#" class="btn-main" style=""]Learn More[/button]
 	
 	}
 	
@@ -204,53 +205,3 @@ function spacer_shortcode( $atts, $content = null ) {
 }
 
 add_shortcode( 'spacer', 'spacer_shortcode' );
-
-// ENABLE WOOCOMMERCE
-// add_action('after_setup_theme',function() {
-//     add_theme_support('woocommerce');
-// });
-// add_theme_support('wc-product-gallery-zoom');
-// add_theme_support('wc-product-gallery-lightbox');
-// add_theme_support('wc-product-gallery-slider');
-
-
-// WOOCOMMERCE CONTENT WITH NO SIDEBAR
-// add_action('woocommerce_before_main_content','add_container_class',9);
-// function add_container_class(){
-// echo '<div class="container pt-5 pb-5">';
-// echo '<div class="row justify-content-center">';
-// echo '<div class="col-md-12">';
-// }
-
-// add_action('woocommerce_after_main_content','close_container_class',9);
-// function close_container_class(){
-// echo '</div>';
-// echo '</div>';
-// echo '</div>';
-// }
-
-// removes sidebar
-// remove_action('woocommerce_sidebar','woocommerce_get_sidebar');
-
-
-
-// WOOCOMMERCE CONTENT WITH CUSTOM SIDEBAR
-// add_action('woocommerce_before_main_content','add_container_class',9);
-// function add_container_class(){
-// echo '<div class="container pt-5 pb-5" style="">';
-// echo '<div class="row">';
-
-// echo get_template_part('partials/sidebar');
-
-// echo '<div class="col-md-9 order-1 order-md-2">';
-// }
-
-// add_action('woocommerce_after_main_content','close_container_class',9);
-// function close_container_class(){
-// echo '</div>';
-// echo '</div>';
-// echo '</div>';
-// }
-
-// removes sidebar
-// remove_action('woocommerce_sidebar','woocommerce_get_sidebar');

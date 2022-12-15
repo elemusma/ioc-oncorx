@@ -25,7 +25,7 @@ echo '<header class="position-relative pt-3 pb-3 z-3 box-shadow bg-white w-100" 
 
 echo '<div class="nav">';
 echo '<div class="container">';
-echo '<div class="row align-items-center">';
+echo '<div class="row align-items-center justify-content-center">';
 echo '<div class="col-lg-3 col-md-6">';
 echo '<a href="' . home_url() . '">';
 
@@ -36,15 +36,15 @@ echo wp_get_attachment_image($logo['id'],'full',"",['class'=>'w-100 h-auto']);
 
 echo '</a>';
 echo '</div>';
-echo '<div class="col-lg-4 col-6 desktop-hidden">';
-echo '<a id="navToggle" class="nav-toggle">';
-echo '<div>';
-echo '<div class="line-1 bg-accent"></div>';
-echo '<div class="line-2 bg-accent"></div>';
-echo '<div class="line-3 bg-accent"></div>';
-echo '</div>';
-echo '</a>';
-echo '</div>';
+// echo '<div class="col-lg-4 col-6 desktop-hidden">';
+// echo '<a id="navToggle" class="nav-toggle">';
+// echo '<div>';
+// echo '<div class="line-1 bg-accent"></div>';
+// echo '<div class="line-2 bg-accent"></div>';
+// echo '<div class="line-3 bg-accent"></div>';
+// echo '</div>';
+// echo '</a>';
+// echo '</div>';
 echo '<div id="navMenuOverlay" class="position-fixed z-2"></div>';
 echo '<div class="col-lg-4 col-md-8 col-11 nav-items bg-white desktop-hidden" id="navItems">';
 
@@ -75,7 +75,9 @@ echo '</div>';
 echo '</header>';
 
 echo '<section class="hero position-relative">';
-$globalPlaceholderImg = get_field('global_placeholder_image','options');
+if(is_front_page()) {
+
+    $globalPlaceholderImg = get_field('global_placeholder_image','options');
 if(is_page()){
 if(has_post_thumbnail()){
 the_post_thumbnail('full', array('class' => 'w-100 h-100 bg-img position-absolute'));
@@ -86,21 +88,29 @@ echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-
 echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
 }
 
-
-if(is_front_page()) {
-echo '<div class="pt-5 pb-5 text-white text-center">';
-echo '<div class="position-relative">';
-echo '<div class="multiply overlay position-absolute w-100 h-100 bg-img"></div>';
-echo '<div class="position-relative">';
-echo '<div class="container">';
+echo '<div class="" style="padding:350px 0 150px;">';
+// echo '<div class="position-relative">';
+// echo '<div class="multiply overlay position-absolute w-100 h-100 bg-img"></div>';
+// echo '<div class="position-relative">';
+echo '<div class="container-fluid">';
 echo '<div class="row">';
-echo '<div class="col-12">';
-echo '<h1 class="pt-3 pb-3 mb-0">' . get_the_title() . '</h1>';
+echo '<div class="col-md-5 pl-lg-0">';
+echo '<h1 class="pt-3 pb-3 pl-lg-5 mb-0 text-accent">' . get_the_title() . '</h1>';
+
+echo '<div class="divider mt-4 mb-4" style="width:100%;"></div>';
+
+echo '<div class="pl-lg-5">';
+if ( have_posts() ) : while ( have_posts() ) : the_post();
+the_content();
+endwhile;
+endif;
+echo '</div>';
+
 echo '</div>';
 echo '</div>';
 echo '</div>';
-echo '</div>';
-echo '</div>';
+// echo '</div>';
+// echo '</div>';
 echo '</div>';
 }
 

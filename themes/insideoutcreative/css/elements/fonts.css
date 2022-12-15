@@ -80,3 +80,47 @@ strong {
 blockquote {
   font-size: 90%;
 }
+
+.garamond {
+  font-family: adobe-garamond-pro, serif;
+  font-weight: 700;
+}
+
+h1,
+.h1,
+.blair-bold {
+  font-family: 'blairitc_ttbold';
+}
+
+h2,
+.h2,
+.blair-light {
+  font-family: 'blairitc_ttlight';
+}
+
+.garamond.bold {
+  font-family: adobe-garamond-pro, serif;
+  font-weight: 700;
+}
+
+/*
+Adobe Garamond Pro Bold
+font-family: adobe-garamond-pro, serif;
+font-weight: 700;
+font-style: normal;
+
+Adobe Garamond Pro Bold Italic
+font-family: adobe-garamond-pro, serif;
+font-weight: 700;
+font-style: italic;
+
+Adobe Garamond Pro Italic
+font-family: adobe-garamond-pro, serif;
+font-weight: 400;
+font-style: italic;
+
+Adobe Garamond Pro Regular
+font-family: adobe-garamond-pro, serif;
+font-weight: 400;
+font-style: normal;
+*/
