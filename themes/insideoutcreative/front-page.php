@@ -96,39 +96,34 @@ if($layout == 'Content Center'){
         echo get_sub_field('content');
         echo '</div>';
         echo '</div>';
+        echo '</div>';
+        echo '</section>';
 
+        echo '<section class="position-relative" style="">';
+        $bgImg = get_sub_field('background_image');
+
+        echo wp_get_attachment_image($bgImg,'full','',['class'=>'w-100 position-absolute','style'=>'top:2%;left:0;height:88%;']);
+        echo '<div class="container">';
         echo '<div class="row">';
 
         if(have_rows('left_side_content')): 
-            echo '<div class="col-lg-5">';
+            echo '<div class="col-lg-5 col-solutions-left">';
             while(have_rows('left_side_content')): the_row();
             $image = get_sub_field('icon');
-            echo '<div class="row pb-5 align-items-center">';
-                echo '<div class="col-lg-6 small">';
+            echo '<div class="row pb-5 align-items-center row-icons-solutions">';
+                echo '<div class="col-lg-6 text-accent text-right">';
                 echo get_sub_field('left_side_inner_content');
                 echo '</div>';
                 echo '<div class="col-lg-4">';
                 echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
-                echo wp_get_attachment_image($image['id'],'full','',['class'=>'','style'=>'width:50px;height:50px;object-fit:contain;']);
+                echo wp_get_attachment_image($image['id'],'full','',['class'=>'','style'=>'width:75px;height:75px;object-fit:contain;']);
                 echo '</div>';
                 echo '</div>';
-                echo '<div class="col-lg-2">';
-                    echo '<div class="" style="width:25px;">';
-                    echo '<?xml version="1.0" encoding="UTF-8"?>
-                    <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59">
-                      <defs>
-                        <style>
-                          .cls-1 {
-                            fill: #28aae1;
-                          }
-                        </style>
-                      </defs>
-                      <g id="Layer_1-2" data-name="Layer 1">
-                        <polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/>
-                      </g>
-                    </svg>';
-                    echo '</div>';
-                echo '</div>';
+                // echo '<div class="col-lg-2 col-arrow">';
+                //     echo '<div class="" style="width:25px;">';
+                //     echo '';
+                //     echo '</div>';
+                // echo '</div>';
                 echo '</div>'; // end of row
             endwhile; 
             echo '</div>';
@@ -136,23 +131,59 @@ if($layout == 'Content Center'){
 
 
         if($middleImage):
-            echo '<div class="col-lg-2">';
-                echo wp_get_attachment_image($middleImage['id'],'full','',['class'=>'w-100 h-100','style'=>'object-fit:contain;']);
+            echo '<div class="col-lg-2 d-flex align-items-center justify-content-center">';
+
+            echo '<div class="position-relative">';
+            echo '<div class="position-absolute d-lg-block d-none arrow-top-left">';
+            echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
+            echo '</div>';
+            echo '<div class="position-absolute d-lg-block d-none arrow-middle-left">';
+            echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
+            echo '</div>';
+            echo '<div class="position-absolute d-lg-block d-none arrow-bottom-left">';
+            echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
+            echo '</div>';
+            echo '<div class="position-absolute d-lg-block d-none arrow-top-right">';
+            echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
+            echo '</div>';
+            echo '<div class="position-absolute d-lg-block d-none arrow-middle-right">';
+            echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
+            echo '</div>';
+            echo '<div class="position-absolute d-lg-block d-none arrow-bottom-right">';
+            echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
+            echo '</div>';
+
+            echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
+                echo wp_get_attachment_image($middleImage['id'],'full','',['class'=>'','style'=>'width:110px;height:110px;object-fit:contain;']);
+            echo '</div>';
+
+            echo '</div>';
+
+
             echo '</div>';
         endif;
 
 
         if(have_rows('right_side_content')): 
-            echo '<div class="col-lg-5">';
+            echo '<div class="col-lg-5 col-solutions-right">';
             echo '<div class="row">';
             while(have_rows('right_side_content')): the_row();
         $image = get_sub_field('right_side_inner_icon');
-                echo '<div class="col-lg-9 small">';
-                echo get_sub_field('right_side_inner_content');
-                echo '</div>';
-                echo '<div class="col-lg-3">';
-                echo wp_get_attachment_image($image['id'],'full','',['class'=>'w-100 h-100','style'=>'object-fit:contain;']);
-                echo '</div>';
+        echo '<div class="row pb-5 align-items-center justify-content-end row-icons-solutions">';
+        echo '<div class="col-lg-4">';
+        echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
+        echo wp_get_attachment_image($image['id'],'full','',['class'=>'','style'=>'width:75px;height:75px;object-fit:contain;']);
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="col-lg-6 text-accent">';
+        echo get_sub_field('right_side_inner_content');
+        echo '</div>';
+        // echo '<div class="col-lg-2 col-arrow">';
+        //     echo '<div class="" style="width:25px;">';
+        //     echo '';
+        //     echo '</div>';
+        // echo '</div>';
+        echo '</div>'; // end of row
             endwhile; 
             echo '</div>';
             echo '</div>';
