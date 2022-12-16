@@ -22,6 +22,9 @@
 }
 
 @media only screen and (min-width:992px) {
+    .col-solutions-right .col-content {
+        transform: translate(20px, 0px);
+    }
 
     .col-solutions-left .row-icons-solutions:nth-child(1),
     .col-solutions-left .row-icons-solutions:nth-child(3) {

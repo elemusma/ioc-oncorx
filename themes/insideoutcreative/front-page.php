@@ -102,7 +102,7 @@ if($layout == 'Content Center'){
         echo '<section class="position-relative" style="">';
         $bgImg = get_sub_field('background_image');
 
-        echo wp_get_attachment_image($bgImg,'full','',['class'=>'w-100 position-absolute','style'=>'top:2%;left:0;height:88%;']);
+        echo wp_get_attachment_image($bgImg,'full','',['class'=>'w-100 position-absolute','style'=>'top:2%;left:0;height:88%;object-fit:cover;']);
         echo '<div class="container">';
         echo '<div class="row">';
 
@@ -111,10 +111,10 @@ if($layout == 'Content Center'){
             while(have_rows('left_side_content')): the_row();
             $image = get_sub_field('icon');
             echo '<div class="row pb-5 align-items-center row-icons-solutions">';
-                echo '<div class="col-lg-6 text-accent text-right">';
+                echo '<div class="col-lg-6 col-8 text-accent text-right col-content">';
                 echo get_sub_field('left_side_inner_content');
                 echo '</div>';
-                echo '<div class="col-lg-4">';
+                echo '<div class="col-4">';
                 echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
                 echo wp_get_attachment_image($image['id'],'full','',['class'=>'','style'=>'width:75px;height:75px;object-fit:contain;']);
                 echo '</div>';
@@ -131,7 +131,7 @@ if($layout == 'Content Center'){
 
 
         if($middleImage):
-            echo '<div class="col-lg-2 d-flex align-items-center justify-content-center">';
+            echo '<div class="col-lg-2 d-flex align-items-center justify-content-center pb-lg-0 pb-5">';
 
             echo '<div class="position-relative">';
             echo '<div class="position-absolute d-lg-block d-none arrow-top-left">';
@@ -170,12 +170,12 @@ if($layout == 'Content Center'){
             while(have_rows('right_side_content')): the_row();
         $image = get_sub_field('right_side_inner_icon');
         echo '<div class="row pb-5 align-items-center justify-content-end row-icons-solutions">';
-        echo '<div class="col-lg-4">';
+        echo '<div class="col-4">';
         echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
         echo wp_get_attachment_image($image['id'],'full','',['class'=>'','style'=>'width:75px;height:75px;object-fit:contain;']);
         echo '</div>';
         echo '</div>';
-        echo '<div class="col-lg-6 text-accent">';
+        echo '<div class="col-lg-6 col-8 text-accent col-content">';
         echo get_sub_field('right_side_inner_content');
         echo '</div>';
         // echo '<div class="col-lg-2 col-arrow">';
