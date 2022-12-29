@@ -35,54 +35,55 @@
     .col-solutions-right .row-icons-solutions:nth-child(3) {
         transform: translate(-75px, 0px);
     }
+}
 
-    .arrow-top-left,
-    .arrow-middle-left,
-    .arrow-bottom-left,
-    .arrow-top-right,
-    .arrow-middle-right,
-    .arrow-bottom-right {
-        width: 45px;
-        height: 45px;
-    }
+.arrow-top-left,
+.arrow-middle-left,
+.arrow-bottom-left,
+.arrow-top-right,
+.arrow-middle-right,
+.arrow-bottom-right {
+    width: 45px;
+    height: 45px;
+}
 
-    .arrow-top-left {
-        top: -40px;
-        left: -5%;
-        transform: translate(0%, 0) rotate(-30deg);
-    }
+.arrow-top-left {
+    top: -40px;
+    left: -5%;
+    transform: translate(0%, 0) rotate(-30deg);
+}
 
-    .arrow-top-right {
-        top: -40px;
-        right: -5%;
-        transform: translate(0%, 0) rotate(30deg);
-    }
+.arrow-top-right {
+    top: -40px;
+    right: -5%;
+    transform: translate(0%, 0) rotate(30deg);
+}
 
-    .arrow-middle-left {
-        top: 50px;
-        left: -55px;
-        transform: translate(0%, 0) rotate(-90deg);
-    }
+.arrow-middle-left {
+    top: 50px;
+    left: -55px;
+    transform: translate(0%, 0) rotate(-90deg);
+}
 
-    .arrow-middle-right {
-        top: 50px;
-        right: -55px;
-        transform: translate(0%, 0) rotate(90deg);
-    }
+.arrow-middle-right {
+    top: 50px;
+    right: -55px;
+    transform: translate(0%, 0) rotate(90deg);
+}
 
-    .arrow-bottom-left {
-        bottom: -30px;
-        left: -20px;
-        transform: translate(0%, 0) rotate(-140deg);
-    }
+.arrow-bottom-left {
+    bottom: -30px;
+    left: -20px;
+    transform: translate(0%, 0) rotate(-140deg);
+}
 
-    .arrow-bottom-right {
-        bottom: -30px;
-        right: -20px;
-        transform: translate(0%, 0) rotate(140deg);
-    }
+.arrow-bottom-right {
+    bottom: -30px;
+    right: -20px;
+    transform: translate(0%, 0) rotate(140deg);
+}
 
-    /* .col-solutions-left .row-icons-solutions:nth-child(1) .col-arrow svg {
+/* .col-solutions-left .row-icons-solutions:nth-child(1) .col-arrow svg {
         transform: rotate(-25deg);
     }
 
@@ -93,6 +94,6 @@
     .col-solutions-left .row-icons-solutions:nth-child(1) .col-arrow svg {
         transform: rotate(-25deg);
     } */
-}
+
 
 /* end of solutions */

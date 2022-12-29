@@ -111,10 +111,10 @@ if($layout == 'Content Center'){
             while(have_rows('left_side_content')): the_row();
             $image = get_sub_field('icon');
             echo '<div class="row pb-5 align-items-center row-icons-solutions">';
-                echo '<div class="col-lg-6 col-8 text-accent text-right col-content">';
+                echo '<div class="col-lg-6 col-6 text-accent text-right col-content">';
                 echo get_sub_field('left_side_inner_content');
                 echo '</div>';
-                echo '<div class="col-4">';
+                echo '<div class="col-md-4 col-5">';
                 echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
                 echo wp_get_attachment_image($image['id'],'full','',['class'=>'','style'=>'width:75px;height:75px;object-fit:contain;']);
                 echo '</div>';
@@ -131,25 +131,25 @@ if($layout == 'Content Center'){
 
 
         if($middleImage):
-            echo '<div class="col-lg-2 d-flex align-items-center justify-content-center pb-lg-0 pb-5">';
+            echo '<div class="col-lg-2 d-flex align-items-center justify-content-center pt-lg-0 pb-lg-0" style="padding-top:100px;padding-bottom:150px;">';
 
             echo '<div class="position-relative">';
-            echo '<div class="position-absolute d-lg-block d-none arrow-top-left">';
+            echo '<div class="position-absolute d-lg-block arrow-top-left">';
             echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
             echo '</div>';
-            echo '<div class="position-absolute d-lg-block d-none arrow-middle-left">';
+            echo '<div class="position-absolute d-lg-block arrow-middle-left">';
             echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
             echo '</div>';
-            echo '<div class="position-absolute d-lg-block d-none arrow-bottom-left">';
+            echo '<div class="position-absolute d-lg-block arrow-bottom-left">';
             echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
             echo '</div>';
-            echo '<div class="position-absolute d-lg-block d-none arrow-top-right">';
+            echo '<div class="position-absolute d-lg-block arrow-top-right">';
             echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
             echo '</div>';
-            echo '<div class="position-absolute d-lg-block d-none arrow-middle-right">';
+            echo '<div class="position-absolute d-lg-block arrow-middle-right">';
             echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
             echo '</div>';
-            echo '<div class="position-absolute d-lg-block d-none arrow-bottom-right">';
+            echo '<div class="position-absolute d-lg-block arrow-bottom-right">';
             echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
             echo '</div>';
 
@@ -166,16 +166,16 @@ if($layout == 'Content Center'){
 
         if(have_rows('right_side_content')): 
             echo '<div class="col-lg-5 col-solutions-right">';
-            echo '<div class="row">';
+            // echo '<div class="row">';
             while(have_rows('right_side_content')): the_row();
         $image = get_sub_field('right_side_inner_icon');
         echo '<div class="row pb-5 align-items-center justify-content-end row-icons-solutions">';
-        echo '<div class="col-4">';
+        echo '<div class="col-md-4 col-5">';
         echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
         echo wp_get_attachment_image($image['id'],'full','',['class'=>'','style'=>'width:75px;height:75px;object-fit:contain;']);
         echo '</div>';
         echo '</div>';
-        echo '<div class="col-lg-6 col-8 text-accent col-content">';
+        echo '<div class="col-lg-6 col-7 text-accent col-content">';
         echo get_sub_field('right_side_inner_content');
         echo '</div>';
         // echo '<div class="col-lg-2 col-arrow">';
@@ -185,7 +185,7 @@ if($layout == 'Content Center'){
         // echo '</div>';
         echo '</div>'; // end of row
             endwhile; 
-            echo '</div>';
+            // echo '</div>';
             echo '</div>';
         endif;
 

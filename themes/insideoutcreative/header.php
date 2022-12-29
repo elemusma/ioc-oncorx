@@ -88,7 +88,7 @@ echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-
 echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
 }
 
-echo '<div class="" style="padding:350px 0 150px;">';
+echo '<div class="hero-padding" style="padding:350px 0 150px;">';
 // echo '<div class="position-relative">';
 // echo '<div class="multiply overlay position-absolute w-100 h-100 bg-img"></div>';
 // echo '<div class="position-relative">';
