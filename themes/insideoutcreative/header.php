@@ -94,7 +94,7 @@ echo '<div class="hero-padding" style="padding:350px 0 150px;">';
 // echo '<div class="position-relative">';
 echo '<div class="container-fluid">';
 echo '<div class="row">';
-echo '<div class="col-md-5 pl-lg-0">';
+echo '<div class="col-md-5 pl-lg-0" data-aos="fade-right">';
 echo '<h1 class="pt-3 pb-3 pl-lg-5 mb-0 text-accent">' . get_the_title() . '</h1>';
 
 echo '<div class="divider mt-4 mb-4" style="width:100%;"></div>';

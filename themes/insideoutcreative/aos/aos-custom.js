@@ -1,1 +1,2 @@
-AOS.init({once: true});
+AOS.init({ once: false });
+// AOS.init();

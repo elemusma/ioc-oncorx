@@ -3,7 +3,7 @@ echo '<footer>';
 echo '<section class="pt-5">';
 echo '<div class="container">';
 echo '<div class="row justify-content-center">';
-echo '<div class="col-md-5 text-center pb-5">';
+echo '<div class="col-md-5 text-center pb-5" data-aos="fade-up">';
 echo '<a href="' . home_url() . '">';
 
 $logo = get_field('logo','options'); 
