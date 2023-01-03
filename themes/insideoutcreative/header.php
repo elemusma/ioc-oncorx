@@ -25,8 +25,8 @@ echo '<header class="position-relative pt-3 pb-3 z-3 box-shadow bg-white w-100" 
 
 echo '<div class="nav">';
 echo '<div class="container">';
-echo '<div class="row align-items-center justify-content-center">';
-echo '<div class="col-lg-3 col-md-6">';
+echo '<div class="row align-items-center justify-content-end">';
+echo '<div class="col-lg-4 col-8">';
 echo '<a href="' . home_url() . '">';
 
 $logo = get_field('logo','options'); 
@@ -35,6 +35,15 @@ echo wp_get_attachment_image($logo['id'],'full',"",['class'=>'w-100 h-auto']);
 }
 
 echo '</a>';
+echo '</div>';
+
+echo '<div class="col-lg-4 col-4">';
+
+wp_nav_menu(array(
+    'menu' => 'Contact',
+    'menu_class'=>'menu d-md-flex flex-wrap list-unstyled justify-content-end mb-0'
+));
+
 echo '</div>';
 // echo '<div class="col-lg-4 col-6 desktop-hidden">';
 // echo '<a id="navToggle" class="nav-toggle">';
@@ -88,16 +97,16 @@ echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-
 echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
 }
 
-echo '<div class="hero-padding" style="padding:350px 0 150px;">';
+echo '<div class="hero-padding" style="padding:25px 0px;">';
 // echo '<div class="position-relative">';
 // echo '<div class="multiply overlay position-absolute w-100 h-100 bg-img"></div>';
 // echo '<div class="position-relative">';
 echo '<div class="container-fluid">';
 echo '<div class="row">';
-echo '<div class="col-md-5 pl-lg-0" data-aos="fade-right">';
+echo '<div class="col-12 pl-lg-0" data-aos="fade-right">';
 echo '<h1 class="pt-3 pb-3 pl-lg-5 mb-0 text-accent">' . get_the_title() . '</h1>';
 
-echo '<div class="divider mt-4 mb-4" style="width:100%;"></div>';
+echo '<div class="divider mt-4 mb-4" style="width:100%;max-width:650px;"></div>';
 
 echo '<div class="pl-lg-5">';
 if ( have_posts() ) : while ( have_posts() ) : the_post();

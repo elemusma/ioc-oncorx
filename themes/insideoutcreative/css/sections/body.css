@@ -186,6 +186,10 @@ hr.text-white {
   }
 }
 
+section {
+  overflow: hidden;
+}
+
 /*** Works on common browsers ***/
 ::selection {
   background-color: var(--accent-primary);

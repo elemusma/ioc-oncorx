@@ -104,6 +104,12 @@ h2,
   font-weight: 700;
 }
 
+@media only screen and (max-width:767px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
 /*
 Adobe Garamond Pro Bold
 font-family: adobe-garamond-pro, serif;

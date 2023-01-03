@@ -26,14 +26,21 @@
         transform: translate(20px, 0px);
     }
 
-    .col-solutions-left .row-icons-solutions:nth-child(1),
+    /* .col-solutions-left .row-icons-solutions:nth-child(1),
     .col-solutions-left .row-icons-solutions:nth-child(3) {
         transform: translate(75px, 0px);
+    } */
+    .col-solutions-left .row-icons-solutions:nth-child(2) {
+        transform: translate(-105px, 0px);
     }
 
     .col-solutions-right .row-icons-solutions:nth-child(1),
     .col-solutions-right .row-icons-solutions:nth-child(3) {
-        transform: translate(-75px, 0px);
+        transform: translate(-5px, 0px);
+    }
+
+    .col-solutions-right .row-icons-solutions:nth-child(2) {
+        transform: translate(80px, 0px);
     }
 }
 
@@ -72,14 +79,14 @@
 }
 
 .arrow-bottom-left {
-    bottom: -30px;
-    left: -20px;
+    bottom: 10px;
+    left: -15px;
     transform: translate(0%, 0) rotate(-140deg);
 }
 
 .arrow-bottom-right {
-    bottom: -30px;
-    right: -20px;
+    bottom: 10px;
+    right: -15px;
     transform: translate(0%, 0) rotate(140deg);
 }
 

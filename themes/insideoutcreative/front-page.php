@@ -117,15 +117,15 @@ if($layout == 'Content Center'){
         echo '</div>';
         echo '</section>';
 
-        echo '<section class="position-relative" style="">';
+        echo '<section class="position-relative ' . get_sub_field('classes') . '" style="' . get_sub_field('style') . '">';
         $bgImg = get_sub_field('background_image');
 
-        echo wp_get_attachment_image($bgImg,'full','',['class'=>'w-100 position-absolute','style'=>'top:2%;left:0;height:88%;object-fit:cover;']);
+        echo wp_get_attachment_image($bgImg,'full','',['class'=>'w-100 position-absolute bg-img','style'=>'top:2%;left:0;height:88%;object-fit:cover;']);
         echo '<div class="container">';
         echo '<div class="row">';
 
         if(have_rows('left_side_content')): 
-            echo '<div class="col-lg-5 col-solutions-left">';
+            echo '<div class="col-lg-5 col-solutions-left d-flex flex-wrap align-items-center">';
             $leftSideCounter=0;
             while(have_rows('left_side_content')): the_row();
             $leftSideCounter++;
@@ -155,7 +155,7 @@ if($layout == 'Content Center'){
         if($middleImage):
             echo '<div class="col-lg-2 d-flex align-items-center justify-content-center pt-lg-0 pb-lg-0" style="padding-top:100px;padding-bottom:150px;" data-aos="fade-up" data-aos-delay="400">';
 
-            echo '<div class="position-relative">';
+            echo '<div class="position-relative pb-5">';
             echo '<div class="position-absolute d-lg-block arrow-top-left">';
             echo '<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 522.6 452.59"><defs><style>.cls-1 {fill: #28aae1;}</style></defs><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="261.3 0 0 452.59 522.6 452.59 261.3 0"/></g></svg>';
             echo '</div>';
@@ -216,6 +216,48 @@ if($layout == 'Content Center'){
         endif;
 
         echo '</div>';
+        echo '</div>';
+        echo '</section>';
+    endwhile; endif;
+} elseif($layout == 'Posts'){
+    if(have_rows('posts')): while(have_rows('posts')): the_row();
+        echo '<section class="position-relative ' . get_sub_field('classes') . '" style="padding:100px 0;' . get_sub_field('style') . '">';
+        echo '<div class="container">';
+        echo '<div class="row">';
+        
+        echo '<div class="col-12 pb-4" data-aos="fade-up">';
+        echo get_sub_field('content');
+        echo '</div>';
+        echo '</div>';
+
+        $posts = get_sub_field('posts');
+
+        if( $posts ):
+            echo '<div class="row">';
+            $postsCounter=0;
+        foreach( $posts as $post ): 
+        // Setup this post for WP functions (variable must be named $post).
+        setup_postdata($post);
+        $postsCounter++;
+        echo '<div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="' . $postsCounter . '00">';
+        echo '<div class="divider mb-4" style="border-width:4px;"></div>';
+
+        echo '<a href="' . get_the_permalink() . '">';
+        echo '<div class="img-hover overflow-h">';
+        the_post_thumbnail('full',array('class'=>'w-100','style'=>'height:250px;object-fit:cover;'));
+        echo '</div>';
+        echo '</a>';
+
+        echo '<span class="d-block mt-3 mb-3 small">' . get_the_date() . '</span>';
+        echo '<a href="' . get_the_permalink() . '" class="text-black p mb-0 d-block" style=""><strong>' . get_the_title() . '</strong></a>';
+        echo '<span class="d-block">' . get_the_excerpt() . '</span>';
+        echo '</div>';
+        endforeach;
+            // Reset the global post object so that the rest of the page works correctly.
+            wp_reset_postdata(); 
+            echo '</div>';
+        endif;
+
         echo '</div>';
         echo '</section>';
     endwhile; endif;
