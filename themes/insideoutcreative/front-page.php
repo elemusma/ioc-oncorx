@@ -153,7 +153,7 @@ if($layout == 'Content Center'){
 
 
         if($middleImage):
-            echo '<div class="col-lg-2 d-flex align-items-center justify-content-center pt-lg-0 pb-lg-0" style="padding-top:100px;padding-bottom:150px;" data-aos="fade-up" data-aos-delay="400">';
+            echo '<div class="col-lg-2 col-middle d-flex align-items-center justify-content-center pt-lg-0 pb-lg-0" style="padding-top:100px;padding-bottom:150px;" data-aos="fade-up" data-aos-delay="400">';
 
             echo '<div class="position-relative pb-5">';
             echo '<div class="position-absolute d-lg-block arrow-top-left">';
@@ -176,7 +176,7 @@ if($layout == 'Content Center'){
             echo '</div>';
 
             echo '<div class="position-relative d-flex align-items-center justify-content-center col-solutions-icon" style="">';
-                echo wp_get_attachment_image($middleImage['id'],'full','',['class'=>'','style'=>'width:110px;height:110px;object-fit:contain;']);
+                echo wp_get_attachment_image($middleImage['id'],'full','',['class'=>'','style'=>'width:175px;height:175px;object-fit:contain;']);
             echo '</div>';
 
             echo '</div>';
