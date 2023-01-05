@@ -1,6 +1,6 @@
 <?php 
 
-echo '<div class="col-md-3 sidebar order-2 order-md-1">';
+echo '<div class="col-lg-3 sidebar order-2 order-lg-1 pt-lg-0 pt-5">';
 echo '<div class="card p-3 mb-2">';
 get_search_form();
 echo '</div>';
