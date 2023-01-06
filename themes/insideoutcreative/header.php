@@ -98,6 +98,9 @@ if(!is_single()){
     echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
     }
 
+    echo '<div class="position-absolute w-100 h-100" style="background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 20%, rgba(0,0,0,0) 100%);top:0;left:0;"></div>';
+
     echo '<div class="hero-padding" style="padding:25px 0px;">';
     // echo '<div class="position-relative">';
     // echo '<div class="multiply overlay position-absolute w-100 h-100 bg-img"></div>';

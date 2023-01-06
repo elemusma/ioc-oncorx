@@ -63,7 +63,7 @@
 .arrow-top-left {
     top: 10px;
     left: -25px;
-    transform: translate(0%, 0) rotate(-50deg);
+    transform: translate(0%, 0) rotate(-110deg);
 }
 
 .arrow-top-right {
@@ -75,7 +75,7 @@
 .arrow-middle-left {
     top: 120px;
     left: -55px;
-    transform: translate(0%, 0) rotate(-90deg);
+    transform: translate(0%, 0) rotate(90deg);
 }
 
 .arrow-middle-right {
@@ -87,7 +87,7 @@
 .arrow-bottom-left {
     bottom: 60px;
     left: -25px;
-    transform: translate(0%, 0) rotate(-125deg);
+    transform: translate(0%, 0) rotate(-70deg);
 }
 
 .arrow-bottom-right {
