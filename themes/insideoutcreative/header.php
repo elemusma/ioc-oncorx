@@ -31,7 +31,10 @@ echo '<a href="' . home_url() . '">';
 
 $logo = get_field('logo','options'); 
 if($logo){
-echo wp_get_attachment_image($logo['id'],'full',"",['class'=>'w-100 h-auto']); 
+echo wp_get_attachment_image($logo['id'],'full',"",[
+    'class'=>'w-100',
+    'style'=>'height:100px;object-fit:contain;'
+]); 
 }
 
 echo '</a>';
