@@ -33,7 +33,7 @@ $logo = get_field('logo','options');
 if($logo){
 echo wp_get_attachment_image($logo['id'],'full',"",[
     'class'=>'w-100',
-    'style'=>'height:100px;object-fit:contain;'
+    'style'=>'height:75px;object-fit:contain;'
 ]); 
 }
 

@@ -10,9 +10,9 @@ $logo = get_field('logo','options');
 $logoFooter = get_field('logo_footer','options'); 
 
 if($logoFooter){
-echo wp_get_attachment_image($logoFooter['id'],'full',"",['class'=>'w-100 h-auto']); 
+echo wp_get_attachment_image($logoFooter['id'],'full',"",['class'=>'w-100', 'style'=>'height:200px;object-fit:contain;']); 
 } elseif($logo) {
-echo wp_get_attachment_image($logo['id'],'full',"",['class'=>'w-100 h-auto']);
+echo wp_get_attachment_image($logo['id'],'full',"",['class'=>'w-100', 'style'=>'height:200px;object-fit:contain;']);
 }
 
 echo '</a>';
