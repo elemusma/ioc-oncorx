@@ -86,23 +86,25 @@ echo '</div>';
 
 echo '</header>';
 
-if(!is_single()){
+// if(!is_single()){
     echo '<section class="hero position-relative">';
-    if(is_front_page()) {
+    // if(is_front_page()) {
 
-        $globalPlaceholderImg = get_field('global_placeholder_image','options');
-    if(is_page()){
-    if(has_post_thumbnail()){
+    //     $globalPlaceholderImg = get_field('global_placeholder_image','options');
+    // if(is_page()){
+    // if(has_post_thumbnail()){
     the_post_thumbnail('full', array('class' => 'w-100 h-100 bg-img position-absolute'));
-    } else {
-    echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
-    }
-    } else {
-    echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
-    }
+    // } else {
+    // echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
+    // }
+    // } else {
+    // echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
+    // }
 
-    echo '<div class="position-absolute w-100 h-100" style="background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(255,255,255,1) 20%, rgba(0,0,0,0) 100%);top:0;left:0;"></div>';
+    if(is_front_page()){
+        echo '<div class="position-absolute w-100 h-100" style="background: rgb(255,255,255);
+        background: linear-gradient(90deg, rgba(255,255,255,1) 20%, rgba(0,0,0,0) 100%);top:0;left:0;"></div>';
+    }
 
     echo '<div class="hero-padding" style="padding:25px 0px;">';
     // echo '<div class="position-relative">';
@@ -128,35 +130,35 @@ if(!is_single()){
     // echo '</div>';
     // echo '</div>';
     echo '</div>';
-    }
+    // }
 
 
 
-    if(!is_front_page()) {
-    echo '<div class="container pt-5 pb-5 text-white text-center">';
-    echo '<div class="row">';
-    echo '<div class="col-md-12">';
-    if(is_page() || !is_front_page()){
-    echo '<h1 class="">' . get_the_title() . '</h1>';
-    } elseif(is_single()){
-    echo '<h1 class="">' . get_single_post_title() . '</h1>';
-    } elseif(is_author()){
-    echo '<h1 class="">Author: ' . get_the_author() . '</h1>';
-    } elseif(is_tag()){
-    echo '<h1 class="">' . get_single_tag_title() . '</h1>';
-    } elseif(is_category()){
-    echo '<h1 class="">' . get_single_cat_title() . '</h1>';
-    } elseif(is_archive()){
-    echo '<h1 class="">' . get_archive_title() . '</h1>';
-    }
-    elseif(!is_front_page() && is_home()){
-    echo '<h1 class="">' . get_the_title(133) . '</h1>';
-    }
-    echo '</div>';
-    echo '</div>';
-    echo '</div>';
-    }
+    // if(!is_front_page()) {
+    // echo '<div class="container pt-5 pb-5 text-white text-center">';
+    // echo '<div class="row">';
+    // echo '<div class="col-md-12">';
+    // if(is_page() || !is_front_page()){
+    // echo '<h1 class="">' . get_the_title() . '</h1>';
+    // } elseif(is_single()){
+    // echo '<h1 class="">' . get_single_post_title() . '</h1>';
+    // } elseif(is_author()){
+    // echo '<h1 class="">Author: ' . get_the_author() . '</h1>';
+    // } elseif(is_tag()){
+    // echo '<h1 class="">' . get_single_tag_title() . '</h1>';
+    // } elseif(is_category()){
+    // echo '<h1 class="">' . get_single_cat_title() . '</h1>';
+    // } elseif(is_archive()){
+    // echo '<h1 class="">' . get_archive_title() . '</h1>';
+    // }
+    // elseif(!is_front_page() && is_home()){
+    // echo '<h1 class="">' . get_the_title(133) . '</h1>';
+    // }
+    // echo '</div>';
+    // echo '</div>';
+    // echo '</div>';
+    // }
 
     echo '</section>';
-}
+// }
 ?>

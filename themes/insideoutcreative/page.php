@@ -20,6 +20,8 @@ echo '</section>';
 
 }
 
+echo get_template_part('partials/content');
+
 } else {
 // we will show password form here
 
