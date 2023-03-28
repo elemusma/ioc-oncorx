@@ -3,7 +3,8 @@ Contributors: Cloudways
 Tags: cache,caching, performance, wp-cache, cdn, combine, compress, speed plugin, database cache,gzip, http compression, js cache, minify, optimize, page cache, performance, speed, expire headers
 Requires at least: 6.0
 Tested up to: 6.1
-Stable tag: 2.0.14
+Requires PHP: 7.4
+Stable tag: 2.0.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +144,40 @@ Yes. The process of setting up CloudFlare with Breeze is easy. Check out the fol
 Using Gzip, Breeze compresses the request files, further reducing the size of the download files and speeding up the user experience.
 
 == Changelog ==
+
+= 2.0.18=
+
+* Add: Integrated Cloudflare Cache in Breeze for Cloudways users only.
+* Add: s-maxage in cache-control of Response Headers.
+* Fix: Stopped purging the OCP cache while cache purging from Breeze.
+* Fix: Improved compatibility of Breeze with Woodmart theme.
+* Fix: Improved compatibility of Breeze with Buddyboss theme.
+* Fix: Preserving declared media for styles on combine CSS.
+
+
+= 2.0.17=
+
+* Fix: P-Tag will not be added when Lazy Load Images and Cross-Origin Safe Links are enabled.
+
+
+
+= 2.0.16=
+
+
+* Fix: Ninja Forms now works when Lazy Load Images and Cross-Origin Safe Links are enabled.
+* Fix: All types of Google Tag Manager scripts will work with the "Delay JS Inline Scripts" option.
+* Add: "Reset Now" option has been added for default settings. It can also operate with WP-CLI.
+* Add: Enabled "Combine JS" option will disable "Delay JS Inline Script" or "Delay All JavaScript" and vice versa.
+
+
+= 2.0.15=
+
+* Add: Internal cache Purge while changing Theme.
+* Add: Internal cache Purge while using the options WP Customizer.
+* Fix: Improvise handling of Optimize Database option under the Database Options Tab by adding a message and loading bar.
+* Fix: Improvise the handling of the Request header while Varnish proxy behind and re-download necessary.
+
+
 
 = 2.0.14=
 

@@ -414,9 +414,47 @@ function breeze_currency_switcher_cache() {
 		$currency = $currency.weglot_get_current_language();
 	}
 
+	if ( is_string( $currency ) && ! empty( $currency ) ) {
+		$currency = mb_strtolower( $currency );
+	}
+
 	return $currency;
 }
 
+/**
+ * @return mixed|null
+ */
+function breeze_is_script_ignored_from_delay( $script = '' ) {
+	if ( empty( $script ) ) {
+		return false;
+	}
+
+	$not_delayed     = false;
+	$scripts_ignored = apply_filters( 'default_scripts_gnore_from_delay',
+		array(
+			'gtag(',
+			'ga(',
+			'google-analytics.com/analytics.js',
+			'googletagmanager.com',
+			'GoogleAnalyticsObject',
+		)
+	);
+
+	if ( is_array( $scripts_ignored ) && ! empty( $scripts_ignored ) ) {
+
+		foreach ( $scripts_ignored as $list_script ) {
+			if ( false !== strpos( $script, $list_script ) ) {
+				$not_delayed = true;
+				break;
+			}
+
+		}
+
+		return $not_delayed;
+	} else {
+		return false;
+	}
+}
 
 function breeze_all_country_codes() {
 	return array(

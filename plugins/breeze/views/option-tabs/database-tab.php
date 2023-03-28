@@ -34,6 +34,7 @@ $orphan_term_meta     = 0;
 $duplicate_term_meta  = 0;
 $tables_to_optimize   = 0;
 
+global $wpdb;
 
 $total_no = 0;
 
@@ -68,9 +69,9 @@ if ( is_multisite() && is_network_admin() ) {
 		$duplicate_user_meta     += Breeze_Configuration::get_element_to_clean( 'duplicated_user_meta' );
 		$orphan_term_meta        += Breeze_Configuration::get_element_to_clean( 'orphan_term_meta' );
 		$duplicate_term_meta     += Breeze_Configuration::get_element_to_clean( 'duplicated_term_meta' );
-		$tables_to_optimize      += Breeze_Configuration::get_element_to_clean( 'optimize_database' );
 		restore_current_blog();
 	}
+	$tables_to_optimize      += Breeze_Configuration::get_element_to_clean( 'optimize_database' );
 } else {
 	// Count items from the current site.
 	$post_revisions = Breeze_Configuration::get_element_to_clean( 'revisions' );

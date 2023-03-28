@@ -291,7 +291,7 @@ class Breeze_Js_Deferred_Loading extends Breeze_MinificationBase {
 					$tag = str_replace( '”', '"', $tag );
 				}
 
-				if ( false !== strpos( $tag, 'ga(' ) || false !== strpos( $tag, 'google-analytics.com/analytics.js' ) ) {
+				if ( true === breeze_is_script_ignored_from_delay( $tag ) ) {
 					$tag = '';
 					continue;
 				}

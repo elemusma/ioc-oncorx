@@ -100,6 +100,17 @@ class MCWPAdmin {
 		}
 	}
 
+	public function hidePluginUpdate($plugins) {
+		$brand = $this->bvinfo->getBrandInfo();
+		$bvslug = $this->bvinfo->slug;
+		if (isset($plugins->response[$bvslug]) && is_array($brand)) {
+			if (array_key_exists('hide_from_menu', $brand) || array_key_exists('hide', $brand)) {
+				unset($plugins->response[$bvslug]);
+			}
+		}
+		return $plugins;
+	}
+
 	public function hidePluginDetails($plugin_metas, $slug) {
 		$brand = $this->bvinfo->getBrandInfo();
 		$bvslug = $this->bvinfo->slug;
@@ -113,6 +124,35 @@ class MCWPAdmin {
 			}
 		}
 		return $plugin_metas;
+	}
+
+	public function handlePluginHealthInfo($plugins) {
+		$brand = $this->bvinfo->getBrandInfo();
+		$title = $this->bvinfo->title;
+		if (!isset($plugins["wp-plugins-active"]) ||
+			!isset($plugins["wp-plugins-active"]["fields"]) ||
+			!isset($plugins["wp-plugins-active"]["fields"][$title])) {
+			return $plugins;
+		}
+		if (is_array($brand)) {
+			if (array_key_exists('hide', $brand)) {
+				unset($plugins["wp-plugins-active"]["fields"][$title]);
+			} else {
+				$plugin = $plugins["wp-plugins-active"]["fields"][$title];
+				$author = $this->bvinfo->author;
+				if (array_key_exists('name', $brand)) {
+					$plugin["label"] = $brand['name'];
+				}
+				if (array_key_exists('author', $brand)) {
+					$plugin["value"] = str_replace($author, $brand['author'], $plugin["value"]);
+				}
+				if (array_key_exists('description', $brand)) {
+					$plugin["debug"] = str_replace($author, $brand['author'], $plugin["debug"]);
+				}
+				$plugins["wp-plugins-active"]["fields"][$title] = $plugin;
+			}
+		}
+		return $plugins;
 	}
 
 	public function settingsLink($links, $file) {

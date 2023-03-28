@@ -189,8 +189,8 @@ class Breeze_Admin {
 			'breeze_save_options'    => '',
 			'breeze_purge_opcache'   => '',
 			'breeze_import_settings' => '',
-			'breeze_reset_default' => '',
-			'breeze_check_cdn_url'  => '',
+			'breeze_reset_default'   => '',
+			'breeze_check_cdn_url'   => '',
 		);
 
 		// Only create the security nonce if the user has manage_options ( administrator capabilities ).
@@ -202,8 +202,8 @@ class Breeze_Admin {
 				'breeze_save_options'    => wp_create_nonce( '_breeze_save_options' ),
 				'breeze_purge_opcache'   => wp_create_nonce( '_breeze_purge_opcache' ),
 				'breeze_import_settings' => wp_create_nonce( '_breeze_import_settings' ),
-				'breeze_reset_default' => wp_create_nonce( '_breeze_reset_default' ),
-				'breeze_check_cdn_url'  => wp_create_nonce( '_breeze_check_cdn_url' ),
+				'breeze_reset_default'   => wp_create_nonce( '_breeze_reset_default' ),
+				'breeze_check_cdn_url'   => wp_create_nonce( '_breeze_check_cdn_url' ),
 			);
 		}
 
@@ -266,12 +266,12 @@ class Breeze_Admin {
 		}
 
 		#$current_screen_url = $current_protocol . '://' . $current_host . $current_script . '?' . $current_params;
-		$current_script = str_replace( '/wp-admin/', '', $current_script);
+		$current_script     = str_replace( '/wp-admin/', '', $current_script );
 		$current_screen_url = trailingslashit( admin_url() ) . $current_script . '?' . $current_params;
-		$current_screen_url = remove_query_arg( array( 'breeze_purge', '_wpnonce' ), $current_screen_url );
+		$current_screen_url = remove_query_arg( array( 'breeze_purge', '_wpnonce', 'breeze_purge_cloudflare', 'breeze_purge_cache_cloudflare' ), $current_screen_url );
 
 		$purge_site_cache_url = esc_url( wp_nonce_url( add_query_arg( 'breeze_purge', 1, $current_screen_url ), 'breeze_purge_cache' ) );
-
+		$purge_cloudflare_cache_url = esc_url( wp_nonce_url( add_query_arg( 'breeze_purge_cloudflare', 1, $current_screen_url ), 'breeze_purge_cache_cloudflare' ) );
 
 		// add purge all item
 		$args = array(
@@ -286,6 +286,19 @@ class Breeze_Admin {
 		// Editor role can only use Purge all cache option
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
+		}
+
+		if ( true === Breeze_CloudFlare_Helper::is_cloudflare_enabled() ) {
+			$args = array(
+				'id'     => 'breeze-purge-cloudflare',
+				'title'  => esc_html__( 'Purge All Cloudflare Cache', 'breeze' ),
+				'parent' => 'breeze-topbar',
+				'href'   => $purge_cloudflare_cache_url,
+				'meta'   => array(
+					'class' => 'breeze-toolbar-group',
+				),
+			);
+			$wp_admin_bar->add_node( $args );
 		}
 
 		// add purge modules group
@@ -1061,6 +1074,8 @@ class Breeze_Admin {
 	 * Clear all cache action.
 	 */
 	public function breeze_clear_all_cache() {
+		set_as_network_screen();
+
 		global $post;
 		$flush_cache = false;
 
@@ -1077,13 +1092,60 @@ class Breeze_Admin {
 			$flush_cache = false;
 		}
 
-		//delete minify
-		Breeze_MinificationCache::clear_minification();
-		//clear normal cache
-		Breeze_PurgeCache::breeze_cache_flush( $flush_cache );
-		//clear varnish cache
-		$this->breeze_clear_varnish();
-		Breeze_PurgeCache::__flush_object_cache();
+		if ( is_multisite() && ! is_network_admin() ) {
+
+			// Show settings inherit option.
+			$inherit_settings      = get_option( 'breeze_inherit_settings', '0' );
+			$is_inherited_settings = isset( $inherit_settings ) ? filter_var( $inherit_settings, FILTER_VALIDATE_BOOLEAN ) : false;
+
+			$url            = get_home_url();
+			$list_of_urls   = array();
+			$list_of_urls[] = trailingslashit( $url );
+
+			if ( true === $is_inherited_settings ) {
+
+				switch_to_blog( get_network()->site_id );
+				//delete minify
+				Breeze_MinificationCache::clear_minification();
+				//clear normal cache
+				Breeze_PurgeCache::breeze_cache_flush( $flush_cache );
+				//clear varnish cache
+				$this->breeze_clear_varnish();
+				Breeze_PurgeCache::__flush_object_cache();
+				$url            = get_home_url();
+				$list_of_urls[] = trailingslashit( $url );
+				restore_current_blog();
+			}
+
+			// for current blog.
+			$current_blog_id = get_current_blog_id();
+			Breeze_MinificationCache::clear_minification( $current_blog_id );
+			Breeze_PurgeCache::breeze_cache_flush( $flush_cache );
+			$main     = new Breeze_PurgeVarnish();
+			$homepage = home_url() . '/?breeze';
+			$main->purge_cache( $homepage );
+
+
+			Breeze_CloudFlare_Helper::reset_all_cache( $list_of_urls );
+			Breeze_PurgeCache::__flush_object_cache();
+
+		} else {
+			$current_blog_id = null;
+			//delete minify
+			if ( is_multisite() ) {
+				$current_blog_id = get_current_blog_id();
+			}
+			Breeze_MinificationCache::clear_minification( $current_blog_id );
+			//clear normal cache
+			Breeze_PurgeCache::breeze_cache_flush( $flush_cache );
+			//clear varnish cache
+			$this->breeze_clear_varnish();
+			$url            = get_home_url();
+			$list_of_urls   = array();
+			$list_of_urls[] = trailingslashit( $url );
+			Breeze_CloudFlare_Helper::reset_all_cache( $list_of_urls );
+			Breeze_PurgeCache::__flush_object_cache();
+		}
 	}
 
 	/**

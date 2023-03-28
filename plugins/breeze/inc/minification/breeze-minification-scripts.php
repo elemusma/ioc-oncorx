@@ -290,7 +290,7 @@ class Breeze_MinificationScripts extends Breeze_MinificationBase {
 
 			foreach ( $matches[0] as $tag ) {
 
-				if ( false !== strpos( $tag, 'ga(' ) || false !== strpos( $tag, 'google-analytics.com/analytics.js' ) ) {
+				if ( true === breeze_is_script_ignored_from_delay( $tag ) ) {
 					$tag = '';
 					continue;
 				}

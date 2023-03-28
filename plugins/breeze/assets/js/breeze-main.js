@@ -66,9 +66,10 @@ jQuery( document ).ready(
 			function ( e ) {
 				e.preventDefault();
 
-				reset_confirm = confirm("Want to reset breeze settings?");
+				reset_confirm = confirm( "Want to reset breeze settings?" );
 
 				if ( reset_confirm ) {
+
 					breeze_reset_default();
 				}
 			}
@@ -106,11 +107,11 @@ jQuery( document ).ready(
 						},
 						dataType: "json", // xml, html, script, json, jsonp, text
 						success: function ( data ) {
-							if(false === data.success){
-								$('#cdn-message-error').show();
-								$('#cdn-message-error').html(data.message);
-							}else{
-								$('#cdn-message-error').hide();
+							if ( false === data.success ) {
+								$( '#cdn-message-error' ).show();
+								$( '#cdn-message-error' ).html( data.message );
+							} else {
+								$( '#cdn-message-error' ).hide();
 							}
 						},
 						error: function ( jqXHR, textStatus, errorThrown ) {
@@ -121,8 +122,8 @@ jQuery( document ).ready(
 
 						}
 					} );
-				}else{
-					$('#cdn-message-error').hide();
+				} else {
+					$( '#cdn-message-error' ).hide();
 				}
 			} );
 		}
@@ -169,27 +170,49 @@ jQuery( document ).ready(
 
 		//reset to default
 		function breeze_reset_default() {
-			$.ajax(
+			$(
+				'<div/>',
 				{
-					url: ajaxurl,
-					dataType: 'json',
-					method: 'POST',
-					data: {
-						action: 'breeze_reset_default',
-						is_network: $('body').hasClass('network-admin'),
-						security: breeze_token_name.breeze_reset_default
-					},
-					success: function (res) {
-						if ( res === true ) {
-							alert('Settings reset to default');
-							purge_action = true;
-						} else {
-							alert('Something went wrong - please try again');
-						}
-						location.reload();
-					}
+					'id': 'breeze_loader_function'
 				}
-			);
+			).appendTo( 'body' );
+
+			$(
+				'<div/>',
+				{
+					'id': 'breeze_info',
+					'html': '<span class="breeze-ajax-loader"></span>'
+				}
+			).appendTo( 'body' );
+
+
+			$.ajax( {
+				type: "POST",
+				url: ajaxurl,
+				data: {
+					action: 'breeze_reset_default',
+					"is-network": $( 'body' ).hasClass( 'network-admin' ),
+					security: breeze_token_name.breeze_reset_default
+				},
+				dataType: "json", // xml, html, script, json, jsonp, text
+				success: function ( data ) {
+					if ( data === true ) {
+						//alert('Settings reset to default');
+						purge_action = true;
+					} else {
+						alert( 'Something went wrong - please try again' );
+					}
+
+				},
+				error: function ( jqXHR, textStatus, errorThrown ) {
+
+				},
+				// called when the request finishes (after success and error callbacks are executed)
+				complete: function ( jqXHR, textStatus ) {
+					location.reload();
+				}
+			} );
+
 		}
 
 		//clear cache by button
@@ -317,9 +340,10 @@ jQuery( document ).ready(
 
 		function current_url_clean() {
 			var query_search = location.search;
-			if ( query_search.indexOf( 'breeze_purge=1' ) !== -1 && query_search.indexOf( '_wpnonce' ) !== -1 ) {
+			if ( ( query_search.indexOf( 'breeze_purge=1' ) !== -1 || query_search.indexOf( 'breeze_purge_cloudflare=1' ) !== -1 ) && query_search.indexOf( '_wpnonce' ) !== -1 ) {
 				var params = new URLSearchParams( location.search );
 				params.delete( 'breeze_purge' )
+				params.delete( 'breeze_purge_cloudflare' )
 				params.delete( '_wpnonce' )
 				history.replaceState( null, '', '?' + params + location.hash )
 			}
@@ -400,19 +424,27 @@ jQuery( document ).ready(
 				var include_inline_js = $( '#include-inline-js' );
 				var group_js = $( '#group-js' );
 				var exclude_js = $( '#exclude-js' );
+				var delay_js_scripts = $( '#enable-js-delay' ); // Delay JS Inline Scripts
+				var enable_js_delay = $( '#breeze-delay-all-js' ); // Delay All JavaScript
 
 				if ( $( this ).is( ':checked' ) ) {
 					//include_inline_js.removeAttr( 'disabled' );
 					//group_js.removeAttr( 'disabled' );
 
 					exclude_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
-					group_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
+					if ( include_inline_js.is( "checked" ) ) {
+						if ( !delay_js_scripts.is( ':checked' ) && !enable_js_delay.is( ':checked' ) ) {
+
+						}
+					}
+					group_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' ); // breeze 194
 					include_inline_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
 				} else {
 					//include_inline_js.removeAttr( 'checked' ).attr( 'disabled', 'disabled' );
 					//group_js.removeAttr( 'checked' ).attr( 'disabled', 'disabled' );
 					include_inline_js.prop( 'checked', false );
 					group_js.prop( 'checked', false );
+					group_js.trigger( 'change' );
 
 
 					exclude_js.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
@@ -422,10 +454,61 @@ jQuery( document ).ready(
 			}
 		);
 
+		/**
+		 * Breeze 194
+		 */
+		// $box_container.on(
+		// 	'change',
+		// 	'#include-inline-js',
+		// 	function () {
+		// 		var js_minification = $( '#minification-js' );
+		// 		var delay_js_scripts = $( '#enable-js-delay' ); // Delay JS Inline Scripts
+		// 		var enable_js_delay = $( '#breeze-delay-all-js' ); // Delay All JavaScript
+		// 		var group_js        = $( '#group-js' );
+		// 		if ( js_minification.is( ':checked' ) ) {
+		// 			if ( !delay_js_scripts.is( ':checked' ) && !enable_js_delay.is( ':checked' ) ) {
+		// 			group_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
+		// 		}
+		// 		}
+		//
+		// 		if ( $( this ).is( ':checked' ) ) {
+		// 			if ( !delay_js_scripts.is( ':checked' ) && !enable_js_delay.is( ':checked' ) ) {
+		// 			group_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
+		// 			}
+		// 		} else {
+		// 			group_js.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+		// 			group_js.prop( 'checked', false );
+		// 		}
+		// 	}
+		// );
+
+		$box_container.on(
+			'change',
+			'#group-js',
+			function () {
+
+				var delay_js_scripts = $( '#enable-js-delay' ); // Delay JS Inline Scripts
+				var enable_js_delay = $( '#breeze-delay-all-js' ); // Delay All JavaScript
+
+				if ( $( this ).is( ':checked' ) ) {
+					delay_js_scripts.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+					delay_js_scripts.prop( 'checked', false );
+
+					enable_js_delay.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+					enable_js_delay.prop( 'checked', false );
+				} else {
+					delay_js_scripts.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
+					enable_js_delay.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
+				}
+			}
+		);
+
 		$box_container.on(
 			'change',
 			'#breeze-delay-all-js',
 			function () {
+
+				var group_js = $( '#group-js' );
 				var $delay_js_div_all = $( '#breeze-delay-js-scripts-div-all' );
 				var $enable_inline_delay = $( '#enable-js-delay' );
 
@@ -434,9 +517,12 @@ jQuery( document ).ready(
 					$( 'input[name="enable-js-delay"]' ).prop( 'checked', false );
 					$( '#breeze-delay-js-scripts-div' ).hide();
 					$enable_inline_delay.attr( 'disabled', 'disabled' );
+					group_js.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+					group_js.prop( 'checked', false );
 				} else {
 					$delay_js_div_all.hide();
 					$enable_inline_delay.removeAttr( 'disabled' );
+					group_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
 				}
 			}
 		)
@@ -447,15 +533,19 @@ jQuery( document ).ready(
 			function () {
 				var $delay_js_div = $( '#breeze-delay-js-scripts-div' );
 				var $delay_all_js = $( '#breeze-delay-all-js' );
+				var group_js = $( '#group-js' );
 
 				if ( $( this ).is( ':checked' ) ) {
 					$delay_js_div.show();
 					$( 'input[name="breeze-delay-all-js"]' ).prop( 'checked', false );
 					$( '#breeze-delay-js-scripts-div-all' ).hide();
 					$delay_all_js.attr( 'disabled', 'disabled' );
+					group_js.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+					group_js.prop( 'checked', false );
 				} else {
 					$delay_js_div.hide();
 					$delay_all_js.removeAttr( 'disabled' );
+					group_js.closest( 'div.br-option-item' ).removeClass( 'br-apply-disable' );
 				}
 			}
 		)
@@ -1021,6 +1111,46 @@ jQuery( document ).ready(
 
 						}
 						selected_services = [];
+
+						var global_group_js = $( '#group-js' );
+						var global_delay_js_scripts = $( '#enable-js-delay' ); // Delay JS Inline Scripts
+						var global_enable_js_delay = $( '#breeze-delay-all-js' ); // Delay All JavaScript
+						var is_exception_delay_js,is_exception_enable_js;
+						if ( global_delay_js_scripts.length ) {
+							is_exception_delay_js = $( '#enable-js-delay' ).get( 0 ).dataset.noaction;
+						}
+						if ( global_enable_js_delay.length ) {
+							is_exception_enable_js = $( '#breeze-delay-all-js' ).get( 0 ).dataset.noaction;
+						}
+
+
+						if ( global_group_js.length ) {
+							if ( global_group_js.is( ':checked' ) ) {
+								if ( typeof is_exception_delay_js === 'undefined' ) {
+									global_delay_js_scripts.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+								}
+
+								if ( typeof is_exception_enable_js === 'undefined' ) {
+									global_enable_js_delay.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+								}
+
+								if ( typeof is_exception_delay_js === 'undefined' && global_delay_js_scripts.is( ':checked' ) ) {
+									global_delay_js_scripts.prop( 'checked', false );
+									global_delay_js_scripts.trigger( 'change' );
+								}
+
+								if ( typeof is_exception_enable_js === 'undefined' && global_enable_js_delay.is( ':checked' ) ) {
+									global_enable_js_delay.prop( 'checked', false );
+									global_enable_js_delay.trigger( 'change' );
+								}
+
+
+							} else if ( global_delay_js_scripts.is( ':checked' ) || global_enable_js_delay.is( ':checked' ) ) {
+								global_group_js.closest( 'div.br-option-item' ).addClass( 'br-apply-disable' );
+								global_group_js.prop( 'checked', false );
+							}
+
+						}
 					}
 				}
 			);
@@ -1047,8 +1177,8 @@ jQuery( document ).ready(
 					if ( existing_notice.length ) {
 						$( data ).insertBefore( existing_notice );
 						existing_notice.remove();
-					}else{
-						$('#wpbody-content').prepend(data);
+					} else {
+						$( '#wpbody-content' ).prepend( data );
 					}
 				}
 			},
@@ -1146,47 +1276,118 @@ jQuery( document ).ready(
 				var ask_clean_start = confirm( 'Proceed to optimize the selected items?' );
 
 				if ( ask_clean_start ) {
-					$.ajax(
+					$(
+						'<div/>',
 						{
-							type: "POST",
-							url: ajaxurl,
-							data: {
-								action: "breeze_purge_database",
-								'action_type': 'custom',
-								'services': JSON.stringify( Object.assign( {}, selected_services ) ),
-								'security': breeze_token_name.breeze_purge_database,
-								'is-network': $( 'body' ).hasClass( 'network-admin' )
-							},
-							dataType: "JSON", // xml, html, script, json, jsonp, text
-							success: function ( data ) {
-
-								$( 'div.br-db-item' ).each(
-									function ( index, element ) {
-										var this_section_id = element.dataset.section;
-										// element == this
-										if ( $.inArray( this_section_id, selected_services ) !== -1 ) {
-											$( element ).find( 'h3' ).find( 'span' ).removeClass( 'br-has' ).html( '0' );
-											$( element ).removeClass( 'br-db-selected' );
-										}
-									}
-								);
-
-								alert( 'Optimization process finished' );
-								$( '#tab-database' ).trigger( 'click' );
-							},
-							error: function ( jqXHR, textStatus, errorThrown ) {
-
-							},
-							// called when the request finishes (after success and error callbacks are executed)
-							complete: function ( jqXHR, textStatus ) {
-								selected_services = [];
-							}
+							'id': 'breeze_loader_function'
 						}
-					);
+					).appendTo( 'body' );
+
+					$(
+						'<div/>',
+						{
+							'id': 'breeze_info'
+						}
+					).appendTo( 'body' );
+
+					breeze_do_db_actions( selected_services, 0 );
 				}
 			}
 		}
 	);
+
+	/**
+	 * Format string to capital case
+	 * created for breeze_do_db_actions:1307
+	 *
+	 * @param str
+	 * @returns {*}
+	 */
+	function breeze_uc_words(str) {
+		return str.replace(/(^|\s)\S/g, function (match) {
+			return match.toUpperCase();
+		});
+	}
+
+	function breeze_do_db_actions( selected_services, call_index, optimize_db_no ) {
+		if ( typeof optimize_db_no === 'undefined' ) {
+			optimize_db_no = {
+				'page_no': 0,
+				'total_no': 0
+			};
+		}
+
+		var title = selected_services[ call_index ];
+		title = title.replace( /_/gi, " " );
+		title = breeze_uc_words( title );
+		title = '<span class="breeze-ajax-loader"></span> ' + ' ' + title;
+
+		if ( 'optimize_database' === selected_services[ call_index ] ) {
+			var current_db_count = optimize_db_no.page_no * 50;
+			title = title + ' (' + current_db_count + ' / ' + optimize_db_no.total_no + ' )';
+		}
+		$( 'body' ).find( '#breeze_info' ).html( title );
+		var count_total = selected_services.length;
+		var do_increment = true;
+		$.ajax(
+			{
+				type: "POST",
+				url: ajaxurl,
+				data: {
+					action: "breeze_purge_database",
+					'action_type': selected_services[ call_index ],
+					'db_count': optimize_db_no.page_no,
+					//'services': JSON.stringify( Object.assign( {}, selected_services[call_index] ) ),
+					'security': breeze_token_name.breeze_purge_database,
+					'is-network': $( 'body' ).hasClass( 'network-admin' )
+				},
+				dataType: "JSON", // xml, html, script, json, jsonp, text
+				success: function ( data ) {
+
+					if ( data.clear.optmize_no ) {
+						optimize_db_no.page_no = data.clear.optmize_no;
+						optimize_db_no.total_no = data.clear.db_total;
+						do_increment = false;
+						breeze_do_db_actions( selected_services, call_index, optimize_db_no );
+						//call_index--;
+					} else {
+						do_increment = true;
+						$( 'div.br-db-item' ).each(
+							function ( index, element ) {
+								var this_section_id = element.dataset.section;
+								// element == this
+								if ( $.inArray( this_section_id, selected_services ) !== -1 ) {
+									$( element ).find( 'h3' ).find( 'span' ).removeClass( 'br-has' ).html( '0' );
+									$( element ).removeClass( 'br-db-selected' );
+								}
+							}
+						);
+					}
+
+				},
+				error: function ( jqXHR, textStatus, errorThrown ) {
+					$( '#breeze_loader_function' ).remove();
+					$( 'body' ).find( '#breeze_info' ).remove();
+					alert( 'Error while trying to optimize' );
+				},
+				// called when the request finishes (after success and error callbacks are executed)
+				complete: function ( jqXHR, textStatus ) {
+					if ( true === do_increment ) {
+						call_index++;
+
+						if ( call_index < count_total ) {
+							breeze_do_db_actions( selected_services, call_index );
+						} else {
+							selected_services = [];
+							$( '#breeze_loader_function' ).remove();
+							$( 'body' ).find( '#breeze_info' ).remove();
+							$( '#tab-database' ).trigger( 'click' );
+						}
+					}
+				}
+			}
+		);
+	}
 
 	$container_box.on(
 		'click',
@@ -1239,8 +1440,24 @@ jQuery( document ).ready(
 
 			if ( true === is_selected ) {
 				the_action_button.removeAttr( 'disabled' );
+				selected_services = [];
+				$( '.br-db-item' ).each( function ( index, element ) {
+					// element == this
+					var this_section_id = this.dataset.section;
+					if ( $( element ).hasClass( 'br-db-selected' ) ) {
+					} else {
+						$( element ).addClass( 'br-db-selected' );
+					}
+					selected_services.push( this_section_id );
+				} );
 			} else {
 				the_action_button.attr( 'disabled', 'disabled' );
+				selected_services = [];
+				$( '.br-db-item' ).each( function ( index, element ) {
+					// element == this
+					$( element ).removeClass( 'br-db-selected' )
+					selected_services = [];
+				} );
 			}
 		}
 	);
@@ -1255,43 +1472,58 @@ jQuery( document ).ready(
 				var ask_clean_start = confirm( 'Proceed to clean all trashed posts and pages?' );
 
 				if ( ask_clean_start ) {
-					$.ajax(
+					$(
+						'<div/>',
 						{
-							type: "POST",
-							url: ajaxurl,
-							data: {
-								action: "breeze_purge_database",
-								'action_type': 'all',
-								'security': breeze_token_name.breeze_purge_database,
-								'is-network': $( 'body' ).hasClass( 'network-admin' )
-							},
-							dataType: "JSON", // xml, html, script, json, jsonp, text
-							success: function ( data ) {
-
-								$( '.br-clean-label' ).find( 'span' ).removeClass( 'br-has' ).html( '( 0 )' );
-
-								$( 'div.br-db-item' ).each(
-									function ( index, element ) {
-										// element == this
-										$( element ).find( 'h3' ).find( 'span' ).removeClass( 'br-has' ).html( '0' );
-									}
-								);
-								var enable_clean_all = $( '#br-clean-all' );
-								if ( enable_clean_all.is( ':checked' ) ) {
-									enable_clean_all.trigger( 'click' );
-								}
-								alert( 'Clean all process finished' );
-
-							},
-							error: function ( jqXHR, textStatus, errorThrown ) {
-
-							},
-							// called when the request finishes (after success and error callbacks are executed)
-							complete: function ( jqXHR, textStatus ) {
-
-							}
+							'id': 'breeze_loader_function'
 						}
-					);
+					).appendTo( 'body' );
+
+					$(
+						'<div/>',
+						{
+							'id': 'breeze_info'
+						}
+					).appendTo( 'body' );
+
+					breeze_do_db_actions( selected_services, 0 );
+					// $.ajax(
+					// 	{
+					// 		type: "POST",
+					// 		url: ajaxurl,
+					// 		data: {
+					// 			action: "breeze_purge_database",
+					// 			'action_type': 'all',
+					// 			'security': breeze_token_name.breeze_purge_database,
+					// 			'is-network': $( 'body' ).hasClass( 'network-admin' )
+					// 		},
+					// 		dataType: "JSON", // xml, html, script, json, jsonp, text
+					// 		success: function ( data ) {
+					//
+					// 			$( '.br-clean-label' ).find( 'span' ).removeClass( 'br-has' ).html( '( 0 )' );
+					//
+					// 			$( 'div.br-db-item' ).each(
+					// 				function ( index, element ) {
+					// 					// element == this
+					// 					$( element ).find( 'h3' ).find( 'span' ).removeClass( 'br-has' ).html( '0' );
+					// 				}
+					// 			);
+					// 			var enable_clean_all = $( '#br-clean-all' );
+					// 			if ( enable_clean_all.is( ':checked' ) ) {
+					// 				enable_clean_all.trigger( 'click' );
+					// 			}
+					// 			alert( 'Clean all process finished' );
+					//
+					// 		},
+					// 		error: function ( jqXHR, textStatus, errorThrown ) {
+					//
+					// 		},
+					// 		// called when the request finishes (after success and error callbacks are executed)
+					// 		complete: function ( jqXHR, textStatus ) {
+					//
+					// 		}
+					// 	}
+					// );
 				}
 			}
 		}
@@ -1347,7 +1579,7 @@ jQuery( document ).ready(
 		'change',
 		'input:radio[name="inherit-settings"]',
 		function () {
-			var is_selected = $('input:radio[name="inherit-settings"]:checked').val();
+			var is_selected = $( 'input:radio[name="inherit-settings"]:checked' ).val();
 			var is_network = '.br-is-network';
 			var is_custom = '.br-is-custom';
 			var tab_is = 'inherit';

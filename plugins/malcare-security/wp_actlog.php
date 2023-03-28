@@ -401,7 +401,6 @@ if (!class_exists('BVWPActLog')) :
 		}
 
 		function get_update_data($options) {
-			global $wp_version;
 			$event_data = array('action' => 'update');
 			if ($options['type'] === 'plugin') {
 				$event_data['type'] = 'plugin';
@@ -418,10 +417,6 @@ if (!class_exists('BVWPActLog')) :
 					unset($options['theme']);
 				}
 				$event_data['themes'] = $this->get_theme_update_data($options['themes']);
-			}
-			else if ($options['type'] === 'core') {
-				$event_data['type'] = 'core';
-				$event_data['wp_core'] = array('prev_version' => $wp_version);
 			}
 			return $event_data;
 		}
@@ -442,10 +437,21 @@ if (!class_exists('BVWPActLog')) :
 		function upgrade_handler($upgrader, $data) {
 			$event_data = array();
 			if ($data['action'] === 'update') {
+				if ('core' === $data['type']) {
+					return;
+				}
 				$event_data = $this->get_update_data($data);
 			} else if ($data['action'] === 'install') {
 				$event_data = $this->get_install_data($upgrader, $data);
 			}
+			$this->add_activity($event_data);
+		}
+
+		function core_upgrade_handler($new_wp_version) {
+			global $wp_version;
+			$event_data = array();
+			$event_data['type'] = 'core';
+			$event_data['wp_core'] = array('prev_version' => $wp_version, 'new_version' => $new_wp_version);
 			$this->add_activity($event_data);
 		}
 
@@ -496,6 +502,7 @@ if (!class_exists('BVWPActLog')) :
 
 			/* SENSOR FOR PLUGIN, THEME, WPCORE UPGRADES */
 			add_action('upgrader_process_complete', array($this, 'upgrade_handler'), 10, 2);
+			add_action('_core_updated_successfully', array($this, 'core_upgrade_handler'), 10, 1);
 
 			/* SENSORS FOR WOOCOMMERCE EVENTS */
 			add_action('woocommerce_attribute_added', array($this, 'woocommerce_attribute_created_handler'), 10, 2);
