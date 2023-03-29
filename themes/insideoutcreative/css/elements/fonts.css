@@ -20,6 +20,10 @@ a.text-accent-tertiary:hover {
   color: var(--accent-tertiary);
 }
 
+.text-accent-quaternary {
+  color: var(--accent-quaternary);
+}
+
 .text-accent {
   color: var(--accent-primary);
 }
@@ -46,6 +50,10 @@ a.text-black:hover {
 
 .ls-1 {
   letter-spacing: 1em;
+}
+
+.ls-2 {
+  letter-spacing: .2em;
 }
 
 .nowrap {

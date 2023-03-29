@@ -12,3 +12,7 @@ body:not(.home) .img-hero {
     min-height: 200px;
     height: 30vh;
 }
+
+body:not(.home) .hero {
+    padding: 250px 0 100px;
+}
