@@ -388,7 +388,7 @@ echo '</section>';
         ]);
 
         echo '<div>';
-        echo '<span class="pt-4 d-inline-block">' . get_sub_field('name') . '</span>';
+        echo '<span class="d-inline-block">' . get_sub_field('name') . '</span>';
         echo '<div class="small" style="color:#8d8c8a;">';
         echo get_sub_field('description');
         echo '</div>';
