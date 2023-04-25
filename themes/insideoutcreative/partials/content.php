@@ -435,7 +435,7 @@ echo '</section>';
 
     echo '<div class="col-lg-4 col-md-6 pt-2 pb-2 ' . get_sub_field('column_classes') . '" style="' . get_sub_field('column_style') . '" data-aos="fade-up">';
     echo '<div>';
-        echo '<span class="pt-4 d-inline-block">' . get_sub_field('title') . '</span>';
+        echo '<span class="d-inline-block">' . get_sub_field('title') . '</span>';
         echo '<div class="" style="color:#8d8c8a;">';
         echo get_sub_field('content');
         echo '</div>';
