@@ -405,7 +405,7 @@ echo '</section>';
     endwhile; endif;
 } elseif ( $layout == 'Thumbnail + Content' ){
     if(have_rows('thumbnail_content')): while(have_rows('thumbnail_content')): the_row();
-    echo '<section class="position-relative content-on-left ' . get_sub_field('classes') . '" style="' . get_sub_field('style') . '" id="' . get_sub_field('id') . '">';
+    echo '<section class="position-relative thumbnail-content ' . get_sub_field('classes') . '" style="' . get_sub_field('style') . '" id="' . get_sub_field('id') . '">';
 
     $bgImg = get_sub_field('background_image');
 
@@ -421,7 +421,7 @@ echo '</section>';
     // if(have_rows('thumbnail_content_repeater')):
     echo '<div class="row justify-content-center ' . get_sub_field('row_classes') . '" style="' . get_sub_field('row_style') . '">';
         // while(have_rows('thumbnail_content_repeater')): the_row();
-    echo '<div class="col-lg-4 col-md-6 pt-2 pb-2 ' . get_sub_field('image_column_classes') . '" style="' . get_sub_field('image_column_style') . '"">';
+    echo '<div class="col-lg-4 col-md-6 pt-2 pb-2 ' . get_sub_field('image_column_classes') . '" style="' . get_sub_field('image_column_style') . '"" data-aos="fade-up">';
     $image = get_sub_field('image');
 
     if($image){
@@ -433,7 +433,7 @@ echo '</section>';
 
     echo '</div>';
 
-    echo '<div class="col-lg-4 col-md-6 pt-2 pb-2 ' . get_sub_field('column_classes') . '" style="' . get_sub_field('column_style') . '">';
+    echo '<div class="col-lg-4 col-md-6 pt-2 pb-2 ' . get_sub_field('column_classes') . '" style="' . get_sub_field('column_style') . '" data-aos="fade-up">';
     echo '<div>';
         echo '<span class="pt-4 d-inline-block">' . get_sub_field('title') . '</span>';
         echo '<div class="" style="color:#8d8c8a;">';
