@@ -1,3 +1,7 @@
+.no-link a {
+    pointer-events: none;
+}
+
 ul.menu li {
     padding: 9px 0;
     position: relative;
