@@ -12,7 +12,7 @@
 
 .modal-content.activate-modal {
   opacity: 1 !important;
-  pointer-events: all;
+  pointer-events: all !important;
 }
 
 .bg-overlay {
@@ -25,6 +25,8 @@
 }
 
 .bg-content {
+  min-height: 400px;
+  height: 85%;
   width: 95%;
   background: white;
   position: relative;
