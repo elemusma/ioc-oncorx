@@ -450,6 +450,21 @@ echo '</section>';
 
     echo '</section>';
     endwhile; endif;
+} elseif ($layout == 'Popup'){
+    if(have_rows('popup_content_group')): while(have_rows('popup_content_group')): the_row();
+    echo '<div class="modal-content ' . get_sub_field('trigger') . ' position-fixed w-100 h-100 z-3">';
+    echo '<div class="bg-overlay"></div>';
+    echo '<div class="bg-content">';
+    echo '<div class="bg-content-inner">';
+    echo '<div class="close" id="">X</div>';
+    echo '<div>';
+    echo get_sub_field('popup_content');
+    echo '</div>';
+    echo '</div>';
+
+    echo '</div>';
+    echo '</div>';
+    endwhile; endif;
 }
 
 endwhile; endif;
