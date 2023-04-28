@@ -7,16 +7,21 @@ echo '<div class="col-md-5 text-center pb-5" data-aos="fade-up">';
 echo '<a href="' . home_url() . '">';
 
 $logo = get_field('logo','options'); 
-$logoFooter = get_field('logo_footer','options'); 
-
-if($logoFooter){
-echo wp_get_attachment_image($logoFooter['id'],'full',"",['class'=>'w-100', 'style'=>'height:200px;object-fit:contain;']); 
-} elseif($logo) {
+if($logo) {
 echo wp_get_attachment_image($logo['id'],'full',"",['class'=>'w-100', 'style'=>'height:200px;object-fit:contain;']);
 }
 
 echo '</a>';
 echo '</div>';
+
+echo '<div class="col-md-5 text-center pb-5" data-aos="fade-up">';
+$logoFooter = get_field('logo_footer','options'); 
+
+if($logoFooter){
+    echo wp_get_attachment_image($logoFooter['id'],'full',"",['class'=>'w-100', 'style'=>'height:200px;object-fit:contain;']); 
+}
+echo '</div>';
+
 echo '</div>';
 echo '</div>';
 echo '</section>';
