@@ -450,7 +450,7 @@ echo '</section>';
 
     echo '</section>';
     endwhile; endif;
-} elseif ($layout == 'Popup'){
+} elseif ($layout == 'Popup Content'){
     if(have_rows('popup_content_group')): while(have_rows('popup_content_group')): the_row();
     echo '<div class="modal-content ' . get_sub_field('trigger') . ' position-fixed w-100 h-100 z-3">';
     echo '<div class="bg-overlay"></div>';
