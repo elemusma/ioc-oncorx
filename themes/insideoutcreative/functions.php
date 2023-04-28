@@ -173,17 +173,19 @@ function btn_shortcode( $atts, $content = null ) {
 	
 	'class' => '',
 	
-	'href' => '#',
+	'href' => '',
 	
 	'style' => '',
 	
-	'target' => ''
+	'target' => '',
+
+	'id' => ''
 	
 	), $atts );
 	
 	// return '<a class="btn-accent-primary" href="' . esc_attr($a['href']) . '" target="' . esc_attr($a['target']) . '">' . $content . '</a>';
 	
-	return '<a class="btn-main ' . esc_attr($a['class']) . '" href="' . esc_attr($a['href']) . '" style="' . esc_attr($a['style']) . '" target="' . esc_attr($a['target']) . '">' . $content . '</a>';
+	return '<a class="btn-main ' . esc_attr($a['class']) . '" href="' . esc_attr($a['href']) . '" style="' . esc_attr($a['style']) . '" target="' . esc_attr($a['target']) . '" id="' . esc_attr($a['id']) . '">' . $content . '</a>';
 	
 	// [button href="#" class="btn-main" style=""]Learn More[/button]
 	
