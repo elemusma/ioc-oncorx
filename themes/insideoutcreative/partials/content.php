@@ -421,8 +421,12 @@ echo '</section>';
     // if(have_rows('thumbnail_content_repeater')):
     echo '<div class="row justify-content-center ' . get_sub_field('row_classes') . '" style="' . get_sub_field('row_style') . '">';
         // while(have_rows('thumbnail_content_repeater')): the_row();
-    echo '<div class="col-lg-4 col-md-6 pt-2 pb-2 ' . get_sub_field('image_column_classes') . '" style="' . get_sub_field('image_column_style') . '"" data-aos="fade-up">';
+    echo '<div class="col-md-6 pt-2 pb-2 ' . get_sub_field('image_column_classes') . '" style="' . get_sub_field('image_column_style') . '"" data-aos="fade-up">';
     $image = get_sub_field('image');
+
+    echo '<div class="row">';
+    
+    echo '<div class="col-lg-3 col-md-6 pt-2 pb-2" style="" data-aos="fade-up">';
 
     if($image){
         echo wp_get_attachment_image($image['id'],'full','',[
@@ -432,15 +436,22 @@ echo '</section>';
     }
 
     echo '</div>';
+    
 
-    echo '<div class="col-lg-4 col-md-6 pt-2 pb-2 ' . get_sub_field('column_classes') . '" style="' . get_sub_field('column_style') . '" data-aos="fade-up">';
-    echo '<div>';
+    echo '<div class="col-lg-9 col-md-6 pt-2 pb-2 ' . get_sub_field('column_classes') . '" style="' . get_sub_field('column_style') . '" data-aos="fade-up">';
+        echo '<div>';
         echo '<span class="d-inline-block">' . get_sub_field('title') . '</span>';
         echo '<div class="" style="color:#8d8c8a;">';
         echo get_sub_field('content');
         echo '</div>';
         echo '</div>';
     echo '</div>';
+
+    echo '</div>'; // end of row
+
+    echo '</div>';
+
+    
     // endwhile;
 
     echo '</div>';
@@ -464,6 +475,123 @@ echo '</section>';
 
     echo '</div>';
     echo '</div>';
+    endwhile; endif;
+} elseif ($layout == 'Leadership') {
+    if(have_rows('leadership_group')): while(have_rows('leadership_group')): the_row();
+    echo '<section class="pt-5 pb-5">';
+    echo '<div class="container">';
+    echo '<div class="row">';
+
+    echo '<div class="col-lg-6 ' . get_sub_field('column_classes') . '" style="' . get_sub_field('column_style') . '">';
+
+    echo '<div data-aos="fade-up">';
+        echo get_sub_field('content');
+    echo '</div>';
+
+
+
+    echo '</div>'; // end of row
+
+    if(have_rows('team_member')): 
+        echo '<div class="row justify-content-center">';
+        while(have_rows('team_member')): the_row();
+        echo '<div class="col-md-6">';
+        echo '<div class="d-flex justify-content-center">';
+            echo '<div class="col-lg-3">';
+            $img = get_sub_field('headshot');
+
+            echo wp_get_attachment_image($img['id'],'full','',[
+                'class'=>'w-100',
+                'style'=>'height:100px;object-fit:cover;'
+            ]);
+
+            echo '</div>';
+            
+            echo '<div class="col-lg-9">';
+                echo '<span class="d-inline-block">' . get_sub_field('name') . '</span>';
+                echo '<div class="" style="color:#8d8c8a;">';
+                echo get_sub_field('bio');
+                echo '</div>';
+            echo '</div>';
+
+        echo '</div>';
+        echo '</div>';
+        endwhile;
+        echo '</div>';
+    endif;
+
+    echo '</div>';
+    echo '</div>';
+    echo '</section>';
+    endwhile; endif;
+} elseif($layout == 'Buttons') {
+    if(have_rows('buttons_group')): while(have_rows('buttons_group')): the_row();
+    echo '<section class="pt-5 pb-5">';
+    echo '<div class="container">';
+    echo '<div class="row justify-content-center">';
+
+    echo '<div class="col-lg-6 text-center ' . get_sub_field('column_classes') . '" style="' . get_sub_field('column_style') . '">';
+
+    echo '<div data-aos="fade-up">';
+        echo get_sub_field('content');
+    echo '</div>';
+
+
+
+    echo '</div>'; 
+    echo '</div>'; // end of row
+
+    if(have_rows('buttons_repeater')): 
+        echo '<div class="row justify-content-center">';
+        $tabsCounter = 0;
+        while(have_rows('buttons_repeater')): the_row();
+        $tabsCounter++;
+                // <div class="col-lg-4 col-md-6"></div>
+
+                if($tabsCounter > 3) {
+                    $tabsCounter = 1;
+                }
+
+                $link = get_sub_field('link');
+
+                if( $link ): 
+                $link_url = $link['url'];
+                $link_title = $link['title'];
+                $link_target = $link['target'] ? $link['target'] : '_self';
+
+                // if($link_title == '#'){
+                echo '<a class="col-lg-3 text-center bold position-relative col-tabs" style="background:#dcdddf;color:#868686;text-decoration:none;padding:50px 0;" href="' . esc_url( $link_url ) . '" target="' . esc_attr( $link_target ) . '" data-aos="fade-up" data-aos-delay="' . $tabsCounter . '00">';
+                echo esc_html( $link_title );
+
+                if($tabsCounter > 1){
+                    echo '<div class="position-absolute h-100" style="
+                    left:0;
+                    top:0;
+                    width:3px;
+                    transform: translate(-50%, 0px);
+                    background: white;"></div>';
+
+                    echo '<div class="position-absolute" style="
+                    left:-50px;
+                    top:50%;
+                    height:3px;
+                    width:100px;
+                    transform: translate(0, -50%);
+                    background: white;"></div>';
+                }
+
+                echo '</a>';
+                // } else {
+                    // echo '<a class="btn-main outline" href="' . esc_url( $link_url ) . '" target="' . esc_attr( $link_target ) . '">' . esc_html( $link_title ) . '</a>';
+                // }
+                endif;
+        endwhile;
+        echo '</div>';
+    endif;
+
+
+    echo '</div>';
+    echo '</section>';
     endwhile; endif;
 }
 

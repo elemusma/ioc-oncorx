@@ -255,6 +255,8 @@ class Breeze_Admin {
 		$current_host     = $_SERVER['HTTP_HOST'];
 		$current_script   = $_SERVER['SCRIPT_NAME'];
 		$current_params   = $_SERVER['QUERY_STRING'];
+		$current_params ? $current_params = '?' . $current_params : $current_params = '';
+		$current_screen_base = get_current_screen()->base;
 
 		if ( is_multisite() && ! is_subdomain_install() ) {
 			$blog_details = get_blog_details();
@@ -266,11 +268,27 @@ class Breeze_Admin {
 		}
 
 		#$current_screen_url = $current_protocol . '://' . $current_host . $current_script . '?' . $current_params;
-		$current_script     = str_replace( '/wp-admin/', '', $current_script );
-		$current_screen_url = trailingslashit( admin_url() ) . $current_script . '?' . $current_params;
-		$current_screen_url = remove_query_arg( array( 'breeze_purge', '_wpnonce', 'breeze_purge_cloudflare', 'breeze_purge_cache_cloudflare' ), $current_screen_url );
+		$current_script = str_replace( '/wp-admin/', '', $current_script );
+		if ( $current_screen_base == 'dashboard' ) {
+			$current_screen_url = admin_url() . $current_params;
+		} else {
+			$current_screen_url = admin_url( basename( $_SERVER['REQUEST_URI'] ) );
+		}
 
-		$purge_site_cache_url = esc_url( wp_nonce_url( add_query_arg( 'breeze_purge', 1, $current_screen_url ), 'breeze_purge_cache' ) );
+		if(true === $is_network){
+			$current_screen_url = network_admin_url( basename( $_SERVER['REQUEST_URI'] ) );
+			// particular fix when network is found twice in the url.
+			$current_screen_url = str_replace('network/network','network/',$current_screen_url);
+		}
+
+		$current_screen_url = remove_query_arg( array(
+			'breeze_purge',
+			'_wpnonce',
+			'breeze_purge_cloudflare',
+			'breeze_purge_cache_cloudflare'
+		), $current_screen_url );
+
+		$purge_site_cache_url       = esc_url( wp_nonce_url( add_query_arg( 'breeze_purge', 1, $current_screen_url ), 'breeze_purge_cache' ) );
 		$purge_cloudflare_cache_url = esc_url( wp_nonce_url( add_query_arg( 'breeze_purge_cloudflare', 1, $current_screen_url ), 'breeze_purge_cache_cloudflare' ) );
 
 		// add purge all item
@@ -288,19 +306,6 @@ class Breeze_Admin {
 			return;
 		}
 
-		if ( true === Breeze_CloudFlare_Helper::is_cloudflare_enabled() ) {
-			$args = array(
-				'id'     => 'breeze-purge-cloudflare',
-				'title'  => esc_html__( 'Purge All Cloudflare Cache', 'breeze' ),
-				'parent' => 'breeze-topbar',
-				'href'   => $purge_cloudflare_cache_url,
-				'meta'   => array(
-					'class' => 'breeze-toolbar-group',
-				),
-			);
-			$wp_admin_bar->add_node( $args );
-		}
-
 		// add purge modules group
 		$args = array(
 			'id'     => 'breeze-purge-modules',
@@ -310,13 +315,30 @@ class Breeze_Admin {
 		);
 		$wp_admin_bar->add_node( $args );
 
-		// add child item (Purge Modules)
-		$args = array(
-			'id'     => 'breeze-purge-varnish-group',
-			'title'  => esc_html__( 'Purge Varnish Cache', 'breeze' ),
-			'parent' => 'breeze-purge-modules',
-		);
-		$wp_admin_bar->add_node( $args );
+
+		if ( true === Breeze_CloudFlare_Helper::is_cloudflare_enabled() ) {
+			$args = array(
+				'id'     => 'breeze-purge-cloudflare',
+				'title'  => esc_html__( 'Purge Cloudflare Cache', 'breeze' ),
+				'parent' => 'breeze-purge-modules',
+				'href'   => $purge_cloudflare_cache_url,
+				'meta'   => array(
+					'class' => 'breeze-toolbar-group',
+				),
+			);
+			$wp_admin_bar->add_node( $args );
+		}
+
+		if ( true === is_varnish_cache_started() ) {
+			// add child item (Purge Modules)
+			$args = array(
+				'id'     => 'breeze-purge-varnish-group',
+				'title'  => esc_html__( 'Purge Varnish Cache', 'breeze' ),
+				'parent' => 'breeze-purge-modules',
+			);
+			$wp_admin_bar->add_node( $args );
+		}
+
 
 		// add child item (Purge Modules)
 		$args = array(

@@ -10,6 +10,7 @@ require_once dirname( __FILE__ ) . '/../fw/config.php';
 require_once dirname( __FILE__ ) . '/info.php';
 require_once dirname( __FILE__ ) . '/ipstore.php';
 require_once dirname( __FILE__ ) . '/logger.php';
+require_once dirname( __FILE__ ) . '/../../helper.php';
 
 	class BVPrependProtect {
 		public $mcConfFile;
@@ -41,12 +42,14 @@ require_once dirname( __FILE__ ) . '/logger.php';
 
 		public function run() {
 			$mcConf = $this->parseFile($this->mcConfFile);
-			$mcIPsConf = $this->parseFile($this->mcIPsFile);
-			$mcRuleSet = $this->parseFile($this->mcRulesFile);
 
-			if (!array_key_exists('time', $mcConf) || !isset($mcConf['time']) || !($mcConf['time'] > time() - (48*3600))) {
+			if (!array_key_exists('time', $mcConf) || !isset($mcConf['time']) || !($mcConf['time'] > time() - (48*3600)) ||
+					!isset($mcConf['mc_conf_version']) || (BVPrependInfo::MC_CONF_VERSION !== $mcConf['mc_conf_version'])) {
 				return false;
 			}
+
+			$mcIPsConf = $this->parseFile($this->mcIPsFile);
+			$mcRuleSet = $this->parseFile($this->mcRulesFile);
 
 			$brand = array_key_exists('brandname', $mcConf) ? $mcConf['brandname'] : "Protect";
 			$bvinfo = new BVPrependInfo($brand);

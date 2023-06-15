@@ -73,7 +73,8 @@ class MCWPAdmin {
 	}
 
 	public function mcsecAdminMenu($hook) {
-		if ($hook === 'toplevel_page_malcare' || preg_match("/bv_add_account$/", $hook) || preg_match("/bv_account_details$/", $hook)) {
+		if ($hook === 'toplevel_page_malcare' || MCHelper::safePregMatch("/bv_add_account$/", $hook) ||
+				MCHelper::safePregMatch("/bv_account_details$/", $hook)) {
 			wp_enqueue_style( 'bootstrap', plugins_url('css/bootstrap.min.css', __FILE__));
 			wp_enqueue_style( 'bvplugin', plugins_url('css/bvplugin.min.css', __FILE__));
 		}
@@ -159,10 +160,13 @@ class MCWPAdmin {
 		#XNOTE: Fix this
 		if ( $file == plugin_basename( dirname(__FILE__).'/malcare.php' ) ) {
 			if (!$this->bvinfo->canSetCWBranding()) {
-				$settings_link = '<a href="'.$this->mainUrl().'">'.__( 'Settings' ).'</a>';
-				array_unshift($links, $settings_link);
-				$account_details = '<a href="'.$this->mainUrl('&account_details=true').'">'.__( 'Account Details' ).'</a>';
-				array_unshift($links, $account_details);
+				$brand = $this->bvinfo->getBrandInfo();
+				if (!is_array($brand) || !array_key_exists('hide_from_menu', $brand)) {
+					$settings_link = '<a href="'.$this->mainUrl().'">'.__( 'Settings' ).'</a>';
+					array_unshift($links, $settings_link);
+					$account_details = '<a href="'.$this->mainUrl('&account_details=true').'">'.__( 'Account Details' ).'</a>';
+					array_unshift($links, $account_details);
+				}
 			}
 		}
 		return $links;

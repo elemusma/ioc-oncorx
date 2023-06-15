@@ -3,22 +3,32 @@ echo '<footer>';
 echo '<section class="pt-5">';
 echo '<div class="container">';
 echo '<div class="row justify-content-center">';
-echo '<div class="col-md-5 text-center pb-5" data-aos="fade-up">';
+echo '<div class="col-12 text-center pb-3" data-aos="fade-up">';
 echo '<a href="' . home_url() . '">';
 
-$logo = get_field('logo','options'); 
+$logo = get_field('logo','options');
+
 if($logo) {
-echo wp_get_attachment_image($logo['id'],'full',"",['class'=>'w-100', 'style'=>'height:200px;object-fit:contain;']);
+    echo wp_get_attachment_image($logo['id'],'full',"",[
+        'class'=>'w-100',
+        'style'=>'height:200px;object-fit:contain;'
+    ]);
 }
 
 echo '</a>';
+
+echo '<p class="pt-5 mb-0">Powered by</p>';
+
 echo '</div>';
 
-echo '<div class="col-md-5 text-center pb-5" data-aos="fade-up">';
+echo '<div class="col-12 text-center pb-5" data-aos="fade-up">';
 $logoFooter = get_field('logo_footer','options'); 
 
 if($logoFooter){
-    echo wp_get_attachment_image($logoFooter['id'],'full',"",['class'=>'w-100', 'style'=>'height:200px;object-fit:contain;']); 
+    echo wp_get_attachment_image($logoFooter['id'],'full',"",[
+        'class'=>'w-100',
+        'style'=>'height:35px;object-fit:contain;'
+    ]); 
 }
 echo '</div>';
 
